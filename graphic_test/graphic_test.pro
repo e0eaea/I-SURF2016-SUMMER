@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-07-07T11:29:09
+# Project created by QtCreator 2016-07-08T11:42:17
 #
 #-------------------------------------------------
 
@@ -8,16 +8,15 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = test_painter2
+TARGET = graphic_test
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    graphicsbezieritem.cpp \
-    mainwindow.cpp
+        mainwindow.cpp \
+    mysquare.cpp
 
-HEADERS  += \
-    graphicsbezieritem.h \
-    mainwindow.h
+HEADERS  += mainwindow.h \
+    mysquare.h
 
 FORMS    += mainwindow.ui

@@ -103,7 +103,6 @@ void MainWindow::drawLines(QPainter *p)
     }
 
 
-
 }
 
 

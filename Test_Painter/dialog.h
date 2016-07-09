@@ -33,6 +33,8 @@ private:
     bool inDrawing;
     QVector<QLine> lines;
     QVector<QPoint> points;
+    QGraphicsScene *scene;
+    //Mysquare *square;
 };
 
 #endif // DIALOG_H
