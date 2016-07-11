@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_SVG_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../test_painter2 -I. -I../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Qt/5.7/clang_64/mkspecs/macx-clang -F/Users/KMK/Qt/5.7/clang_64/lib
+INCPATH       = -I../test_painter2 -I. -I../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Qt/5.7/clang_64/mkspecs/macx-clang -F/Users/KMK/Qt/5.7/clang_64/lib
 QMAKE         = /Users/KMK/Qt/5.7/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = test_painter21.0.0
 DISTDIR = /Users/KMK/Documents/I-SURF2016-SUMMER/build-test_painter2-Desktop_Qt_5_7_0_clang_64bit-Debug/.tmp/test_painter21.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -headerpad_max_install_names -stdlib=libc++ -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wl,-rpath,/Users/KMK/Qt/5.7/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/KMK/Qt/5.7/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
+LIBS          = $(SUBLIBS) -F/Users/KMK/Qt/5.7/clang_64/lib -framework QtSvg -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -390,6 +390,7 @@ Makefile: ../test_painter2/test_painter2.pro ../../../Qt/5.7/clang_64/mkspecs/ma
 		../../../Qt/5.7/clang_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.7/clang_64/mkspecs/features/lex.prf \
 		../test_painter2/test_painter2.pro \
+		../../../Qt/5.7/clang_64/lib/QtSvg.framework/QtSvg.prl \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		../../../Qt/5.7/clang_64/lib/QtGui.framework/QtGui.prl \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/QtCore.prl
@@ -554,6 +555,7 @@ Makefile: ../test_painter2/test_painter2.pro ../../../Qt/5.7/clang_64/mkspecs/ma
 ../../../Qt/5.7/clang_64/mkspecs/features/yacc.prf:
 ../../../Qt/5.7/clang_64/mkspecs/features/lex.prf:
 ../test_painter2/test_painter2.pro:
+../../../Qt/5.7/clang_64/lib/QtSvg.framework/QtSvg.prl:
 ../../../Qt/5.7/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 ../../../Qt/5.7/clang_64/lib/QtGui.framework/QtGui.prl:
 ../../../Qt/5.7/clang_64/lib/QtCore.framework/QtCore.prl:
@@ -899,7 +901,7 @@ moc_mainwindow.cpp: ../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QMa
 		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QPen \
 		../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/bin/moc
-	/Users/KMK/Qt/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/KMK/Qt/5.7/clang_64/mkspecs/macx-clang -I/Users/KMK/Documents/I-SURF2016-SUMMER/test_painter2 -I/Users/KMK/Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.3.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include -I'/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks (framework directory)' -F/Users/KMK/Qt/5.7/clang_64/lib ../test_painter2/mainwindow.h -o moc_mainwindow.cpp
+	/Users/KMK/Qt/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/KMK/Qt/5.7/clang_64/mkspecs/macx-clang -I/Users/KMK/Documents/I-SURF2016-SUMMER/test_painter2 -I/Users/KMK/Qt/5.7/clang_64/lib/QtSvg.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.3.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include -I'/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks (framework directory)' -F/Users/KMK/Qt/5.7/clang_64/lib ../test_painter2/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1501,7 +1503,12 @@ mainwindow.o: ../test_painter2/mainwindow.cpp ../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QPen \
 		ui_mainwindow.h \
 		../test_painter2/controlitem.h \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsEllipseItem
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsEllipseItem \
+		../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers/QSvgGenerator \
+		../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers/qsvggenerator.h \
+		../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers/QSvgRenderer \
+		../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers/qsvgrenderer.h \
+		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/QFile
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../test_painter2/mainwindow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 

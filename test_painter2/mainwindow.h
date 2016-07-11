@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QtGui>
 #include <QtCore>
-#include <QLabel>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 
@@ -24,9 +23,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_actionNew_triggered();
+    void on_actionSave_file_triggered();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+    QPixmap image;
+    QImage  *imageObject;
     GraphicsBezierItem *gbi;
     QPointF points[4];
     int now_point;

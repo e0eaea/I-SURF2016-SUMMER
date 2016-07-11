@@ -8,6 +8,7 @@
 
 #include "graphicsbezieritem.h"
 
+#include <QFileDialog>
 
 
 
@@ -26,8 +27,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene=new QGraphicsScene();
     scene->setSceneRect(0, 0, 400, 400);
-
-
 
     QGraphicsView* view=new QGraphicsView(ui->centralWidget);
     view->setScene(scene);
@@ -103,22 +102,24 @@ void MainWindow::drawLines(QPainter *p)
     }
 
 
-
 }
-
-
 
 MainWindow::~MainWindow()
-
 {
-
     delete ui;
-
 }
 
+void MainWindow::on_actionNew_triggered()
+{
+    now_point=0; scene->clear();
+}
 
-
-
-
-
-
+void MainWindow::on_actionSave_file_triggered()
+{
+    QString fileName= QFileDialog::getSaveFileName(this, "Save image", QCoreApplication::applicationDirPath(), "BMP Files (*.bmp);;JPEG (*.JPEG);;PNG (*.png)" );
+        if (!fileName.isNull())
+        {
+            QPixmap pixMap = ui->centralWidget->grab();
+            pixMap.save(fileName);
+        }
+}
