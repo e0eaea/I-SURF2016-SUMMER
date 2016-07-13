@@ -29,6 +29,8 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    void update();
+
 private:
     std::vector<QPointF> controls;
     float precision;
@@ -36,7 +38,7 @@ private:
     QRectF rect;
     QPen pen;
 
-    void update();
+
     void updateRect();
     QPointF tCurve(std::vector<QPointF> points, float t);
 };

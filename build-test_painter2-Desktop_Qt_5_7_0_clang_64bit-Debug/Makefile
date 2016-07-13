@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_QML_DEBUG -DQT_SVG_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../test_painter2 -I. -I../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Qt/5.7/clang_64/mkspecs/macx-clang -F/Users/KMK/Qt/5.7/clang_64/lib
+INCPATH       = -I../test_painter2 -I. -I../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers -I../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Qt/5.7/clang_64/mkspecs/macx-clang -F/Users/KMK/Qt/5.7/clang_64/lib
 QMAKE         = /Users/KMK/Qt/5.7/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = test_painter21.0.0
 DISTDIR = /Users/KMK/Documents/I-SURF2016-SUMMER/build-test_painter2-Desktop_Qt_5_7_0_clang_64bit-Debug/.tmp/test_painter21.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -headerpad_max_install_names -stdlib=libc++ -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wl,-rpath,/Users/KMK/Qt/5.7/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/KMK/Qt/5.7/clang_64/lib -framework QtSvg -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
+LIBS          = $(SUBLIBS) -F/Users/KMK/Qt/5.7/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -50,10 +50,16 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../test_painter2/main.cpp \
 		../test_painter2/graphicsbezieritem.cpp \
-		../test_painter2/mainwindow.cpp moc_mainwindow.cpp
+		../test_painter2/mainwindow.cpp \
+		../test_painter2/mygraphicbezier.cpp \
+		../test_painter2/mypoint.cpp \
+		../test_painter2/mygraphicsview.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		graphicsbezieritem.o \
 		mainwindow.o \
+		mygraphicbezier.o \
+		mypoint.o \
+		mygraphicsview.o \
 		moc_mainwindow.o
 DIST          = ../../../Qt/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.7/clang_64/mkspecs/qdevice.pri \
@@ -215,9 +221,15 @@ DIST          = ../../../Qt/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.7/clang_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.7/clang_64/mkspecs/features/lex.prf \
 		../test_painter2/test_painter2.pro ../test_painter2/graphicsbezieritem.h \
-		../test_painter2/mainwindow.h ../test_painter2/main.cpp \
+		../test_painter2/mainwindow.h \
+		../test_painter2/mygraphicbezier.h \
+		../test_painter2/mypoint.h \
+		../test_painter2/mygraphicsview.h ../test_painter2/main.cpp \
 		../test_painter2/graphicsbezieritem.cpp \
-		../test_painter2/mainwindow.cpp
+		../test_painter2/mainwindow.cpp \
+		../test_painter2/mygraphicbezier.cpp \
+		../test_painter2/mypoint.cpp \
+		../test_painter2/mygraphicsview.cpp
 QMAKE_TARGET  = test_painter2
 DESTDIR       = 
 TARGET        = test_painter2.app/Contents/MacOS/test_painter2
@@ -390,7 +402,6 @@ Makefile: ../test_painter2/test_painter2.pro ../../../Qt/5.7/clang_64/mkspecs/ma
 		../../../Qt/5.7/clang_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.7/clang_64/mkspecs/features/lex.prf \
 		../test_painter2/test_painter2.pro \
-		../../../Qt/5.7/clang_64/lib/QtSvg.framework/QtSvg.prl \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		../../../Qt/5.7/clang_64/lib/QtGui.framework/QtGui.prl \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/QtCore.prl
@@ -555,7 +566,6 @@ Makefile: ../test_painter2/test_painter2.pro ../../../Qt/5.7/clang_64/mkspecs/ma
 ../../../Qt/5.7/clang_64/mkspecs/features/yacc.prf:
 ../../../Qt/5.7/clang_64/mkspecs/features/lex.prf:
 ../test_painter2/test_painter2.pro:
-../../../Qt/5.7/clang_64/lib/QtSvg.framework/QtSvg.prl:
 ../../../Qt/5.7/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 ../../../Qt/5.7/clang_64/lib/QtGui.framework/QtGui.prl:
 ../../../Qt/5.7/clang_64/lib/QtCore.framework/QtCore.prl:
@@ -588,8 +598,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../test_painter2/graphicsbezieritem.h ../test_painter2/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../test_painter2/main.cpp ../test_painter2/graphicsbezieritem.cpp ../test_painter2/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../test_painter2/graphicsbezieritem.h ../test_painter2/mainwindow.h ../test_painter2/mygraphicbezier.h ../test_painter2/mypoint.h ../test_painter2/mygraphicsview.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../test_painter2/main.cpp ../test_painter2/graphicsbezieritem.cpp ../test_painter2/mainwindow.cpp ../test_painter2/mygraphicbezier.cpp ../test_painter2/mypoint.cpp ../test_painter2/mygraphicsview.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../test_painter2/mainwindow.ui $(DISTDIR)/
 
 
@@ -889,19 +899,19 @@ moc_mainwindow.cpp: ../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QMa
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qversionnumber.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qxmlstream.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qtcoreversion.h \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		../test_painter2/mygraphicbezier.h \
 		../test_painter2/graphicsbezieritem.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
 		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QPen \
+		../test_painter2/mypoint.h \
 		../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/bin/moc
-	/Users/KMK/Qt/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/KMK/Qt/5.7/clang_64/mkspecs/macx-clang -I/Users/KMK/Documents/I-SURF2016-SUMMER/test_painter2 -I/Users/KMK/Qt/5.7/clang_64/lib/QtSvg.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.3.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include -I'/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks (framework directory)' -F/Users/KMK/Qt/5.7/clang_64/lib ../test_painter2/mainwindow.h -o moc_mainwindow.cpp
+	/Users/KMK/Qt/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/KMK/Qt/5.7/clang_64/mkspecs/macx-clang -I/Users/KMK/Documents/I-SURF2016-SUMMER/test_painter2 -I/Users/KMK/Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.3.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include -I'/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks (framework directory)' -F/Users/KMK/Qt/5.7/clang_64/lib ../test_painter2/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1195,16 +1205,16 @@ main.o: ../test_painter2/main.cpp ../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qversionnumber.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qxmlstream.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qtcoreversion.h \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		../test_painter2/mygraphicbezier.h \
 		../test_painter2/graphicsbezieritem.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
 		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QPen \
+		../test_painter2/mypoint.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../test_painter2/main.cpp
@@ -1491,25 +1501,145 @@ mainwindow.o: ../test_painter2/mainwindow.cpp ../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qversionnumber.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qxmlstream.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qtcoreversion.h \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		../test_painter2/mygraphicbezier.h \
 		../test_painter2/graphicsbezieritem.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
 		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QPen \
+		../test_painter2/mypoint.h \
 		ui_mainwindow.h \
-		../test_painter2/controlitem.h \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsEllipseItem \
-		../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers/QSvgGenerator \
-		../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers/qsvggenerator.h \
-		../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers/QSvgRenderer \
-		../../../Qt/5.7/clang_64/lib/QtSvg.framework/Headers/qsvgrenderer.h \
-		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/QFile
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QFileDialog \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qfiledialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../test_painter2/mainwindow.cpp
+
+mygraphicbezier.o: ../test_painter2/mygraphicbezier.cpp ../test_painter2/mygraphicbezier.h \
+		../test_painter2/graphicsbezieritem.h \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QPen \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpen.h \
+		../test_painter2/mypoint.h \
+		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mygraphicbezier.o ../test_painter2/mygraphicbezier.cpp
+
+mypoint.o: ../test_painter2/mypoint.cpp ../test_painter2/mypoint.h \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mypoint.o ../test_painter2/mypoint.cpp
+
+mygraphicsview.o: ../test_painter2/mygraphicsview.cpp ../test_painter2/mygraphicsview.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QtGui \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qaccessible.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qaccessiblebridge.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qaccessibleobject.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qaccessibleplugin.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qbitmap.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qicon.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qiconengine.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qiconengineplugin.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qimageiohandler.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qimagereader.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qimagewriter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qmovie.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpicture.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpictureformatplugin.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpixmapcache.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qstandarditemmodel.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qclipboard.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qcursor.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qdrag.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qgenericplugin.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qgenericpluginfactory.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qguiapplication.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qinputmethod.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qkeysequence.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qoffscreensurface.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglcontext.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglwindow.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpaintdevicewindow.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpalette.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpixelformat.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qrasterwindow.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qscreen.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qsessionmanager.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qstylehints.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qsurface.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qsurfaceformat.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtouchdevice.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qwindow.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qwindowdefs.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qgenericmatrix.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qmatrix4x4.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qquaternion.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qvector2d.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qvector3d.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qvector4d.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopengl.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglbuffer.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopengldebug.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglextrafunctions.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglframebufferobject.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglfunctions.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglpaintdevice.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglpixeltransferoptions.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglshaderprogram.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopengltexture.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopengltimerquery.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglversionfunctions.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglvertexarrayobject.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qbackingstore.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qbrush.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qmatrix.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpagedpaintdevice.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpagelayout.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpagesize.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpaintdevice.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpaintengine.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpainterpath.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpdfwriter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpen.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpolygon.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qregion.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qrgb.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qrgba64.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qabstracttextdocumentlayout.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qfontdatabase.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qfontinfo.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qfontmetrics.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qglyphrun.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qrawfont.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qstatictext.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qsyntaxhighlighter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextcursor.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextdocument.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextdocumentfragment.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextdocumentwriter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextformat.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextlayout.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextlist.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextobject.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextoption.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtexttable.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qdesktopservices.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qvalidator.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtguiversion.h \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mygraphicsview.o ../test_painter2/mygraphicsview.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

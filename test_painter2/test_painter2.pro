@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui svg
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -14,10 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     graphicsbezieritem.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mygraphicbezier.cpp \
+    mypoint.cpp \
+    mygraphicsview.cpp
 
 HEADERS  += \
     graphicsbezieritem.h \
-    mainwindow.h
+    mainwindow.h \
+    mygraphicbezier.h \
+    mypoint.h \
+    mygraphicsview.h
 
 FORMS    += mainwindow.ui

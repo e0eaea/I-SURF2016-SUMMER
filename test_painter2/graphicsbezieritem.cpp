@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QDebug>
 
-const float GraphicsBezierItem::DEFAULT_PRECISION = 0.05f;
+const float GraphicsBezierItem::DEFAULT_PRECISION = 0.01f;
 
 GraphicsBezierItem::GraphicsBezierItem(QGraphicsItem *parent) :
     GraphicsBezierItem(QPointF(0,0), QPointF(0,0), parent) {
