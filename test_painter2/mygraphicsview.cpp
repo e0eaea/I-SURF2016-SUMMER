@@ -22,10 +22,9 @@ void MyGraphicsView::mousePressEvent(QMouseEvent *event)
     {
         QPointF point=QPointF(event->pos().x(),event->pos().y());
         points[now_point++]=point;
-
     }
+     QGraphicsView::mousePressEvent(event);
 
-    QGraphicsView::mousePressEvent(event);
 }
 
 void MyGraphicsView::mouseReleaseEvent(QMouseEvent *event)
@@ -52,7 +51,7 @@ void MyGraphicsView::drawLines()
         double rad = 5;
         Mypoint *mp=new Mypoint(now_point,QRect(pt.rx(),pt.ry(), rad, rad));
         scene->addItem(mp);
-        qDebug()<<mp->rect().topRight()<<"    "<<mp->rect().topLeft();
+       // qDebug()<<mp->rect().topRight()<<"    "<<mp->rect().topLeft();
         points_ellipse.push_back(mp);
 
         //qDebug()<<pt;
@@ -61,12 +60,7 @@ void MyGraphicsView::drawLines()
 
     if(now_point==4)
     {
-
-        Mypoint* pt_item=points_ellipse.at(0);
-        qDebug()<<pt_item->rect().topRight()<<"    "<<pt_item->rect().topLeft();
-
         gbi = new MyGraphicBezier(points_ellipse);
-
         scene->addItem(gbi->getCurves());
     }
 

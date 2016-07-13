@@ -14,15 +14,16 @@ Mypoint::Mypoint(int number, QRect rect, QGraphicsEllipseItem *parent):QGraphics
 
 void Mypoint::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton) {
-        qDebug() << "Pressed";
+    if(this->flags())
+        if(event->button() == Qt::LeftButton)
+            qDebug() << "Pressed";
 
-    }
 }
 
 void Mypoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton){
+
+    if (this->flags() &&event->button() == Qt::LeftButton){
         qDebug()<<"release!";
         QPointF point=QPointF(event->scenePos());
         this->setRect(point.x(),point.y(),this->rect().size().width(),this->rect().size().height());
