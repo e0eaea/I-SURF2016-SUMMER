@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     view=new MyGraphicsView(ui->centralWidget);
+    modifying=false;
 
 }
 
@@ -25,7 +26,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionNew_triggered()
 {
-   view->new_drawing();
+    view->new_drawing();
 }
 
 void MainWindow::on_actionSave_file_triggered()
@@ -37,3 +38,38 @@ void MainWindow::on_actionSave_file_triggered()
         pixMap.save(fileName);
     }
 }
+
+void MainWindow::on_actionAdd_curve_triggered()
+{
+    qDebug()<<"add click";
+    view->add_drawing();
+}
+
+void MainWindow::on_actionModify_triggered()
+{
+    qDebug()<<"modify click";
+
+    if(!view->getIs_drawing())
+    {
+        if(!modifying)
+         ui->actionModify->setText("Done");
+
+        else
+            ui->actionModify->setText("Modify");
+
+        change_enable_button();
+        modifying=!modifying;
+        view->setIs_selecting(modifying);
+    }
+
+
+}
+
+void MainWindow::change_enable_button()
+{
+    ui->actionNew->setEnabled(modifying);
+    ui->actionAdd_curve->setEnabled(modifying);
+    ui->actionSave_file->setEnabled(modifying);
+
+}
+

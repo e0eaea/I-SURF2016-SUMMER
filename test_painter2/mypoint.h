@@ -15,7 +15,7 @@ public:
 
 protected:
      void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 private:
     QGraphicsTextItem * label;
     int point_number;

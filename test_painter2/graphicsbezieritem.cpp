@@ -3,6 +3,9 @@
 #include <cassert>
 #include <QPainter>
 #include <QDebug>
+#include <math.h>
+#include <QWidget>
+
 
 const float GraphicsBezierItem::DEFAULT_PRECISION = 0.01f;
 
@@ -18,6 +21,7 @@ GraphicsBezierItem::GraphicsBezierItem(const QPointF &c1, const QPointF &c2, flo
     QGraphicsItem(parent),
     controls({c1,c2}),
     precision(precision) {
+    path = new QPainterPath();
     update();
 }
 
@@ -42,6 +46,7 @@ void GraphicsBezierItem::setControl(std::size_t num, const QPointF &c) {
     controls[num] = c;
     update();
 }
+
 
 const std::vector<QPointF>& GraphicsBezierItem::getControls() const {
     return controls;
@@ -73,10 +78,50 @@ QRectF GraphicsBezierItem::boundingRect() const {
 }
 
 void GraphicsBezierItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+
+
     painter->setRenderHint(QPainter::Antialiasing);
     painter->setPen(pen);
-    painter->drawPolyline(curve.data(), curve.size());  //This is draw thing!
+    // painter->drawPolyline(curve.data(), curve.size());  //This is draw thing!
+    path->moveTo(controls.at(0));
+    path->cubicTo(controls.at(1),controls.at(2),controls.at(3));
+    painter->strokePath(*path,pen);
+
 }
+
+float GraphicsBezierItem::contains_point(QPointF p, float epsilon)
+{
+    float min_distance = float(0x7fffffff);
+    float t = 0.0;
+
+    while(t < 1.0)
+    {
+        QPointF point =path->pointAtPercent(t);
+        QPointF spline_point = QPointF(point.x(), point.y());
+        //        qDebug()<<p<<"  "<<spline_point;
+        float distance = this->distance(p, spline_point);
+        if (distance < min_distance)
+            min_distance = distance;
+        t += 0.1;
+    }
+    //    qDebug()<<min_distance<<epsilon;
+    return (min_distance <= epsilon);
+
+}
+
+void GraphicsBezierItem::set_selected(bool selected)
+{
+    is_select=selected;
+}
+
+float  GraphicsBezierItem::distance(QPointF p0,QPointF p1)
+{
+
+    float a = p1.rx() - p0.rx();
+    float b = p1.ry() - p0.ry();
+    return sqrt(a * a + b * b);
+}
+
 
 void GraphicsBezierItem::update() {
     curve.clear();
@@ -86,6 +131,21 @@ void GraphicsBezierItem::update() {
 
     updateRect();
 }
+
+
+//void GraphicsBezierItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+//{
+////
+//    qDebug()<<this->flags();
+//   if(this->flags())
+//        qDebug()<<"curve pressed";
+//}
+
+//void GraphicsBezierItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+//{
+////    if(event->button() == Qt::LeftButton)
+//        qDebug()<<"curve release";
+//}
 
 void GraphicsBezierItem::updateRect() {
     rect.setRect(0,0,0,0);
@@ -116,7 +176,6 @@ QPointF GraphicsBezierItem::tCurve(std::vector<QPointF> points, float t) {
         return tCurve(npoints, t);
     }
 }
-
 
 
 

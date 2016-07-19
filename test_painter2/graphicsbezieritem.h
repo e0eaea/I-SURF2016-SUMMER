@@ -2,6 +2,7 @@
 #define GRAPHICSBEZIERITEM_H
 
 #include <QGraphicsItem>
+#include <QPainterPath>
 #include <QPen>
 
 class GraphicsBezierItem : public QGraphicsItem
@@ -28,18 +29,27 @@ public:
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
+    float distance(QPointF p0,QPointF p1);
+    float contains_point(QPointF p, float epsilon);
+    void set_selected(bool selected);
     void update();
+
+
+//protected:
+//     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+//     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
 
 private:
     std::vector<QPointF> controls;
+    QPainterPath* path;
     float precision;
     std::vector<QPointF> curve;
     QRectF rect;
     QPen pen;
-
-
+    bool is_select;
     void updateRect();
+
     QPointF tCurve(std::vector<QPointF> points, float t);
 };
 

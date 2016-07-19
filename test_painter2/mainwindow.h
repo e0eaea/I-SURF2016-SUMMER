@@ -24,8 +24,13 @@ public:
 private slots:
     void on_actionNew_triggered();
     void on_actionSave_file_triggered();
+    void on_actionAdd_curve_triggered();
+    void on_actionModify_triggered();
+    void change_enable_button();
+
 
 private:
+    bool modifying;
     Ui::MainWindow *ui;
     MyGraphicsView* view;
 

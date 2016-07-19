@@ -8,12 +8,17 @@
 class MyGraphicBezier
 {
 private:
-    GraphicsBezierItem *curves;
+    GraphicsBezierItem *bezier_curve;
     std::vector<Mypoint *> points_ellipse;
+    int curve_number;
 public:
-    MyGraphicBezier(const std::vector<Mypoint *> points);
-
-    GraphicsBezierItem *getCurves() const;
+    MyGraphicBezier(const std::vector<Mypoint *> &points);
+    GraphicsBezierItem *getBezier_curve() const;
+    void update();
+    int getCurve_number() const;
+    void setCurve_number(int value);
+    std::vector<Mypoint *> getPoints_ellipse() const;
+    void setPoints_ellipse(const std::vector<Mypoint *> &value);
 };
 
 

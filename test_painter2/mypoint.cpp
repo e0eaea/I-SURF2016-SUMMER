@@ -42,6 +42,8 @@ QGraphicsTextItem *Mypoint::getLabel() const
     return label;
 }
 
+
+
 void Mypoint::update_label()
 {
     QPointF point=this->rect().topLeft();
