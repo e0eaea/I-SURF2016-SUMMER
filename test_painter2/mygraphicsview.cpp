@@ -1,7 +1,6 @@
 #include "mygraphicsview.h"
 #include "QDebug"
 
-
 MyGraphicsView::MyGraphicsView(QWidget *widget):QGraphicsView(widget)
 {
     qDebug()<<"this";
@@ -55,6 +54,11 @@ void MyGraphicsView::mouseReleaseEvent(QMouseEvent *event)
     }
 
 
+}
+
+std::vector<MyGraphicBezier *> MyGraphicsView::getCurves() const
+{
+    return curves;
 }
 
 bool MyGraphicsView::getIs_selecting() const
@@ -195,7 +199,8 @@ void MyGraphicsView::drawLines()
     {
 
         int num=gbi->getCurve_number()-1;
-        qDebug()<<curves.at(num);
+        qDebug()<<"출력샘플";
+
 
         scene->removeItem(gbi->getBezier_curve());
         delete gbi;

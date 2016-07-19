@@ -18,6 +18,7 @@ public:
     bool getIs_drawing() const;
     bool getIs_selecting() const;
     void setIs_selecting(bool value);
+    std::vector<MyGraphicBezier *> getCurves() const;
 
 protected:
     void mousePressEvent(QMouseEvent *event);

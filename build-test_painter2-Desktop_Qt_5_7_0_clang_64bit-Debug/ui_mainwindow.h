@@ -26,10 +26,11 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionSave_file;
+    QAction *actionSave_Image;
     QAction *actionNew;
     QAction *actionAdd_curve;
     QAction *actionModify;
+    QAction *actionSave_file;
     QWidget *centralWidget;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
@@ -44,14 +45,16 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(500, 400);
-        actionSave_file = new QAction(MainWindow);
-        actionSave_file->setObjectName(QStringLiteral("actionSave_file"));
+        actionSave_Image = new QAction(MainWindow);
+        actionSave_Image->setObjectName(QStringLiteral("actionSave_Image"));
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QStringLiteral("actionNew"));
         actionAdd_curve = new QAction(MainWindow);
         actionAdd_curve->setObjectName(QStringLiteral("actionAdd_curve"));
         actionModify = new QAction(MainWindow);
         actionModify->setObjectName(QStringLiteral("actionModify"));
+        actionSave_file = new QAction(MainWindow);
+        actionSave_file->setObjectName(QStringLiteral("actionSave_file"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -78,6 +81,8 @@ public:
         menuBar->addAction(menuAdd->menuAction());
         menuBar->addAction(menuModify->menuAction());
         menuBar->addAction(menuSave->menuAction());
+        menuSave->addAction(actionSave_Image);
+        menuSave->addSeparator();
         menuSave->addAction(actionSave_file);
         menuNew->addAction(actionNew);
         menuAdd->addAction(actionAdd_curve);
@@ -85,6 +90,7 @@ public:
         toolBar->addAction(actionNew);
         toolBar->addAction(actionAdd_curve);
         toolBar->addAction(actionModify);
+        toolBar->addAction(actionSave_Image);
         toolBar->addAction(actionSave_file);
 
         retranslateUi(MainWindow);
@@ -95,10 +101,11 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        actionSave_file->setText(QApplication::translate("MainWindow", "save", 0));
+        actionSave_Image->setText(QApplication::translate("MainWindow", "Save Image", 0));
         actionNew->setText(QApplication::translate("MainWindow", "new", 0));
         actionAdd_curve->setText(QApplication::translate("MainWindow", "add curve", 0));
         actionModify->setText(QApplication::translate("MainWindow", "Select", 0));
+        actionSave_file->setText(QApplication::translate("MainWindow", "Save file", 0));
         menuSave->setTitle(QApplication::translate("MainWindow", "Save", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuAdd->setTitle(QApplication::translate("MainWindow", "Add", 0));

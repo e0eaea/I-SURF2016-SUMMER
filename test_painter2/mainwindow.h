@@ -6,6 +6,8 @@
 #include <QtCore>
 #include <QGraphicsView>
 #include "mygraphicsview.h"
+#include "mygraphicbezier.h"
+#include "graphicsbezieritem.h"
 
 
 namespace Ui {
@@ -28,6 +30,8 @@ private slots:
     void on_actionModify_triggered();
     void change_enable_button();
 
+
+    void on_actionSave_Image_triggered();
 
 private:
     bool modifying;
