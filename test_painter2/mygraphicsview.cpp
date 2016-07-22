@@ -1,5 +1,8 @@
 #include "mygraphicsview.h"
 #include "QDebug"
+#include <iostream>
+#include <sstream>
+#include <string>
 
 MyGraphicsView::MyGraphicsView(QWidget *widget):QGraphicsView(widget)
 {
@@ -23,6 +26,7 @@ void MyGraphicsView::mousePressEvent(QMouseEvent *event)
     if (event->buttons() & Qt::LeftButton & (now_point<4))
     {
         QPointF point=QPointF(event->pos().x(),event->pos().y());
+
         points[now_point++]=point;
     }
     else if(now_point>4)
@@ -153,6 +157,25 @@ void MyGraphicsView::add_drawing()
     points_ellipse.clear();
 }
 
+void MyGraphicsView::add_curve(QString string)
+{
+    add_drawing();
+    vector<double> s=split(string,' ');
+    double rad = 5;
+    points_ellipse.clear();
+    for(int i=1; i<=4; i++)
+    {
+        Mypoint *mp=new Mypoint(i,QRect(s[2*i-1],s[2*i], rad, rad));
+        points_ellipse.push_back(mp);
+        scene->addItem(mp);
+        scene->addItem(mp->getLabel());
+    }
+
+    add_curve_bezier(s[0]);
+    now_point=5;
+
+}
+
 void MyGraphicsView::clear_points_label()
 {
     for(int i=0; i<now_point-1; i++)
@@ -188,17 +211,18 @@ void MyGraphicsView::drawLines()
         double rad = 5;
         Mypoint *mp=new Mypoint(now_point,QRect(pt.rx(),pt.ry(), rad, rad));
         scene->addItem(mp);
+        scene->addItem(mp->getLabel());
         // qDebug()<<mp->rect().topRight()<<"    "<<mp->rect().topLeft();
         points_ellipse.push_back(mp);
 
         //qDebug()<<pt;
-        scene->addItem(mp->getLabel());
     }
 
     if(now_point==5)
     {
 
         int num=gbi->getCurve_number()-1;
+        float precision=gbi->getBezier_curve()->getPrecision();
         qDebug()<<"출력샘플";
 
 
@@ -206,12 +230,12 @@ void MyGraphicsView::drawLines()
         delete gbi;
         qDebug()<<points_ellipse;
         gbi= curves.at(num)=NULL;
-        gbi = new MyGraphicBezier(points_ellipse);
+        gbi = new MyGraphicBezier(points_ellipse,precision);
         gbi->setCurve_number(num+1);
         curves.at(num)=gbi;
         scene->addItem(gbi->getBezier_curve());
 
-      qDebug()<<"this";
+        qDebug()<<"this";
         qDebug()<<curves.size();
 
         //여기서 지우고 업데이트
@@ -225,21 +249,34 @@ void MyGraphicsView::drawLines()
 
     if(now_point==4)
     {
-        is_drawing=false;
-        gbi = new MyGraphicBezier(points_ellipse);
-        this->curves.push_back(gbi);
-        qDebug() <<curves.size()<<"여기 숫자저장";
-        qDebug()<<gbi->getBezier_curve()->getControls();
-        gbi->setCurve_number(this->curves.size());
-        scene->addItem(gbi->getBezier_curve());
 
-
+        add_curve_bezier(0.01f);
         qDebug() <<"여기"<<curves;
         now_point++;
     }
 
+}
 
+void MyGraphicsView::add_curve_bezier(float precision)
+{
+    is_drawing=false;
+    gbi = new MyGraphicBezier(points_ellipse,precision);
+    this->curves.push_back(gbi);
+    qDebug() <<curves.size()<<"여기 숫자저장";
+    qDebug()<<gbi->getBezier_curve()->getControls();
+    gbi->setCurve_number(this->curves.size());
+    scene->addItem(gbi->getBezier_curve());
+}
 
+vector<double> MyGraphicsView::split(QString str, char delimiter) {
+    vector<double> internal;
+    stringstream ss(str.toStdString()); // Turn the string into a stream.
+    string tok;
 
+    while(getline(ss, tok, delimiter)) {
+        internal.push_back(stof(tok));
+        cout<<tok<<endl;
+    }
 
+    return internal;
 }

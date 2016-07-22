@@ -6,13 +6,14 @@
 #include <QGraphicsScene>
 #include "mygraphicbezier.h"
 
-
+using namespace std;
 class MyGraphicsView: public QGraphicsView
 {
 public:
     MyGraphicsView(QWidget *widget);
     void new_drawing();
     void add_drawing();
+    void add_curve(QString string);
     void clear_points_label();
     void draw_points_label(int num);
     bool getIs_drawing() const;
@@ -37,9 +38,8 @@ private:
     void drawLines();
     void select_item_at(QPoint p);
     void unselect_items();
-
-    //temp_point for modifying
-
+    vector<double>split(QString str, char delimiter);
+    void add_curve_bezier(float precision);
 
 };
 

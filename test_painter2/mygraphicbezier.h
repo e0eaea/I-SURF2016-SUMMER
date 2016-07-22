@@ -12,7 +12,7 @@ private:
     std::vector<Mypoint *> points_ellipse;
     int curve_number;
 public:
-    MyGraphicBezier(const std::vector<Mypoint *> &points);
+    MyGraphicBezier(const std::vector<Mypoint *>& points,float precision);
     GraphicsBezierItem *getBezier_curve() const;
     void update();
     int getCurve_number() const;

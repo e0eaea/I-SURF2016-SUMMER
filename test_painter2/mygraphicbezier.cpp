@@ -38,7 +38,7 @@ void MyGraphicBezier::setPoints_ellipse(const std::vector<Mypoint *> &value)
     points_ellipse = value;
 }
 
-MyGraphicBezier::MyGraphicBezier(const std::vector<Mypoint *>& points)
+MyGraphicBezier::MyGraphicBezier(const std::vector<Mypoint *>& points,float precision)
 {
     points_ellipse=points;
     std::vector<Mypoint *>::iterator i;
@@ -49,7 +49,7 @@ MyGraphicBezier::MyGraphicBezier(const std::vector<Mypoint *>& points)
         pt_item->setFlag(QGraphicsItem::ItemIsMovable);
     }
 
-    bezier_curve= new GraphicsBezierItem(points_ellipse.at(0)->rect().center(),points_ellipse.at(1)->rect().center());
+    bezier_curve= new GraphicsBezierItem(points_ellipse.at(0)->rect().center(),points_ellipse.at(1)->rect().center(),precision);
     bezier_curve->addControl(points_ellipse.at(2)->rect().center());
     bezier_curve->addControl(points_ellipse.at(3)->rect().center());
 
