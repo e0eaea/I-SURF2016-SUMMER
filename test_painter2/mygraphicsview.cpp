@@ -80,13 +80,15 @@ bool MyGraphicsView::getIs_drawing() const
     return is_drawing;
 }
 
-void MyGraphicsView::select_item_at(QPoint p){
+void MyGraphicsView::select_item_at(QPoint p)
+{
 
 
     QPointF point = this->mapToScene(p);
     this->unselect_items();
 
-    foreach (MyGraphicBezier* item,curves) {
+    foreach (MyGraphicBezier* item,curves)
+    {
         GraphicsBezierItem*curve= item->getBezier_curve();
         if(curve->contains_point(point, this->epsilon))
         {
@@ -268,7 +270,8 @@ void MyGraphicsView::add_curve_bezier(float precision)
     scene->addItem(gbi->getBezier_curve());
 }
 
-vector<double> MyGraphicsView::split(QString str, char delimiter) {
+vector<double> MyGraphicsView::split(QString str, char delimiter)
+{
     vector<double> internal;
     stringstream ss(str.toStdString()); // Turn the string into a stream.
     string tok;
