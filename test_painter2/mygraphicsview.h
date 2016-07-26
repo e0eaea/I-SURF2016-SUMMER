@@ -21,6 +21,8 @@ public:
     void setIs_selecting(bool value);
     std::vector<MyGraphicBezier *> getCurves() const;
 
+    QGraphicsScene *getScene() const;
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);

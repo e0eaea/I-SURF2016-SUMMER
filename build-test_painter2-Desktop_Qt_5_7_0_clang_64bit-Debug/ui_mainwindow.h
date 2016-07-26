@@ -32,6 +32,7 @@ public:
     QAction *actionModify;
     QAction *actionSave_file;
     QAction *actionOpen_file;
+    QAction *actionOpen_image;
     QWidget *centralWidget;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
@@ -59,6 +60,8 @@ public:
         actionSave_file->setObjectName(QStringLiteral("actionSave_file"));
         actionOpen_file = new QAction(MainWindow);
         actionOpen_file->setObjectName(QStringLiteral("actionOpen_file"));
+        actionOpen_image = new QAction(MainWindow);
+        actionOpen_image->setObjectName(QStringLiteral("actionOpen_image"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -95,12 +98,15 @@ public:
         menuAdd->addAction(actionAdd_curve);
         menuModify->addAction(actionModify);
         menuOpen->addAction(actionOpen_file);
+        menuOpen->addSeparator();
+        menuOpen->addAction(actionOpen_image);
         toolBar->addAction(actionNew);
         toolBar->addAction(actionAdd_curve);
         toolBar->addAction(actionModify);
         toolBar->addAction(actionSave_Image);
         toolBar->addAction(actionSave_file);
         toolBar->addAction(actionOpen_file);
+        toolBar->addAction(actionOpen_image);
 
         retranslateUi(MainWindow);
 
@@ -116,6 +122,7 @@ public:
         actionModify->setText(QApplication::translate("MainWindow", "Select", 0));
         actionSave_file->setText(QApplication::translate("MainWindow", "Save file", 0));
         actionOpen_file->setText(QApplication::translate("MainWindow", "open file", 0));
+        actionOpen_image->setText(QApplication::translate("MainWindow", "open image", 0));
         menuSave->setTitle(QApplication::translate("MainWindow", "Save", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuAdd->setTitle(QApplication::translate("MainWindow", "Add", 0));

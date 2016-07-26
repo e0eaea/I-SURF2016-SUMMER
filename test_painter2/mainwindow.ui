@@ -55,6 +55,8 @@
      <string>Open</string>
     </property>
     <addaction name="actionOpen_file"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_image"/>
    </widget>
    <addaction name="menuNew"/>
    <addaction name="menuAdd"/>
@@ -78,6 +80,7 @@
    <addaction name="actionSave_Image"/>
    <addaction name="actionSave_file"/>
    <addaction name="actionOpen_file"/>
+   <addaction name="actionOpen_image"/>
   </widget>
   <action name="actionSave_Image">
    <property name="text">
@@ -107,6 +110,11 @@
   <action name="actionOpen_file">
    <property name="text">
     <string>open file</string>
+   </property>
+  </action>
+  <action name="actionOpen_image">
+   <property name="text">
+    <string>open image</string>
    </property>
   </action>
  </widget>

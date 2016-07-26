@@ -33,6 +33,8 @@ private slots:
 
     void on_actionOpen_file_triggered();
 
+    void on_actionOpen_image_triggered();
+
 private:
     bool modifying;
     Ui::MainWindow *ui;

@@ -9,6 +9,7 @@ class GraphicsBezierItem : public QGraphicsItem
 {
 public:
     static const float DEFAULT_PRECISION;
+    static const float MIN_DISTANCE;
 
     explicit GraphicsBezierItem(QGraphicsItem *parent = 0);
     GraphicsBezierItem(const QPointF &c1, const QPointF &c2, QGraphicsItem *parent = 0);
@@ -35,14 +36,9 @@ public:
     void update();
 
 
-//protected:
-//     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-//     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-
 
 private:
     std::vector<QPointF> controls;
-    QPainterPath* path;
     float precision;
     std::vector<QPointF> curve;
     QRectF rect;

@@ -60,6 +60,11 @@ void MyGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 
 }
 
+QGraphicsScene *MyGraphicsView::getScene() const
+{
+    return scene;
+}
+
 std::vector<MyGraphicBezier *> MyGraphicsView::getCurves() const
 {
     return curves;

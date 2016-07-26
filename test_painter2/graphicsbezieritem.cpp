@@ -8,6 +8,7 @@
 
 
 const float GraphicsBezierItem::DEFAULT_PRECISION = 0.01f;
+const float GraphicsBezierItem::MIN_DISTANCE =0x7fffffff;
 
 GraphicsBezierItem::GraphicsBezierItem(QGraphicsItem *parent) :
     GraphicsBezierItem(QPointF(0,0), QPointF(0,0), parent) {
@@ -21,7 +22,6 @@ GraphicsBezierItem::GraphicsBezierItem(const QPointF &c1, const QPointF &c2, flo
     QGraphicsItem(parent),
     controls({c1,c2}),
     precision(precision) {
-    path = new QPainterPath();
     update();
 }
 
@@ -70,7 +70,7 @@ QPen GraphicsBezierItem::getPen() const {
 
 void GraphicsBezierItem::setPen(const QPen &value) {
     pen = value;
-    updateRect();
+   // updateRect();
 }
 
 QRectF GraphicsBezierItem::boundingRect() const {
@@ -82,29 +82,22 @@ void GraphicsBezierItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
     painter->setRenderHint(QPainter::Antialiasing);
     painter->setPen(pen);
-    // painter->drawPolyline(curve.data(), curve.size());  //This is draw thing!
-    path->moveTo(controls.at(0));
-    path->cubicTo(controls.at(1),controls.at(2),controls.at(3));
-    painter->strokePath(*path,pen);
-
+    painter->drawPolyline(curve.data(), curve.size());  //This is draw thing!
 }
 
 float GraphicsBezierItem::contains_point(QPointF p, float epsilon)
 {
-    float min_distance = float(0x7fffffff);
-    float t = 0.0;
+    float min_distance=MIN_DISTANCE;
 
-    while(t < 1.0)
+    for(std::size_t i = 0; i<curve.size(); i++)
     {
-        QPointF point =path->pointAtPercent(t);
+        QPointF point = curve[i];
         QPointF spline_point = QPointF(point.x(), point.y());
-        //        qDebug()<<p<<"  "<<spline_point;
-        float distance = this->distance(p, spline_point);
+
+        float distance = this->distance(p, point);
         if (distance < min_distance)
             min_distance = distance;
-        t += 0.1;
     }
-    //    qDebug()<<min_distance<<epsilon;
     return (min_distance <= epsilon);
 
 }
@@ -132,20 +125,6 @@ void GraphicsBezierItem::update() {
     updateRect();
 }
 
-
-//void GraphicsBezierItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
-//{
-////
-//    qDebug()<<this->flags();
-//   if(this->flags())
-//        qDebug()<<"curve pressed";
-//}
-
-//void GraphicsBezierItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-//{
-////    if(event->button() == Qt::LeftButton)
-//        qDebug()<<"curve release";
-//}
 
 void GraphicsBezierItem::updateRect() {
     rect.setRect(0,0,0,0);

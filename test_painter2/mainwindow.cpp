@@ -93,7 +93,8 @@ void MainWindow::on_actionSave_file_triggered()
 
         char tmp_s[MAX];
 
-        foreach (MyGraphicBezier* curve, curves){
+        foreach (MyGraphicBezier* curve, curves)
+        {
             sprintf(tmp_s,"%s%.2f",tmp_s,curve->getBezier_curve()->getPrecision());
 
             foreach(Mypoint *p, curve->getPoints_ellipse())
@@ -163,3 +164,46 @@ void MainWindow::on_actionOpen_file_triggered()
 
 }
 
+
+void MainWindow::on_actionOpen_image_triggered()
+{
+//    QString fileName = QFileDialog::getOpenFileName(this, tr("Open ImageFile"), QCoreApplication::applicationDirPath(), tr("Image Files (*.png)"));
+
+//    if (fileName != "")
+//    {
+//        QFile file(fileName);
+
+//        QPixmap bw = QPixmap(fileName);
+//        QImage image = bw.toImage();
+//        view->getScene()->addPixmap(QPixmap::fromImage(image));
+//        image = image.convertToFormat(QImage::Format_RGB888);
+
+//        QVector<bool> bvec;
+//        QByteArray bytes = message.toAscii();
+//        char mask;
+//        QRgb tempPix;
+
+//        for(int i = 0; i < bytes.size(); i++) {
+//            for(int j = 0; j < 8; j++) {
+//                mask = (0x01 << j);
+//                bvec.push_back((bytes[i] & mask) == mask);
+//            }
+//        }
+
+//        if(image.height() < bvec.size()) {
+//            qDebug() << "Not enough space in image";
+//        }
+
+//        for(int j = 0; j < bvec.size(); j++) {
+//            QRgb *pixel = (QRgb *)image.scanLine(j);
+//            tempPix = *pixel;
+//            int blue = qBlue(tempPix);
+
+//            blue &= 0xFE;
+//            blue |= (bvec[j] == 1) ? 0x01 : 0x00;
+//            *pixel = qRgba(qRed(tempPix), qGreen(tempPix), blue, qAlpha(tempPix));
+//        }
+
+
+//    }
+}
