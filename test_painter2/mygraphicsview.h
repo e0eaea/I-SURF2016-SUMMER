@@ -14,12 +14,13 @@ public:
     void new_drawing();
     void add_drawing();
     void add_curve(QString string);
+    void convert_image_to_point(vector <QPoint *> pixels);
     void clear_points_label();
     void draw_points_label(int num);
     bool getIs_drawing() const;
     bool getIs_selecting() const;
     void setIs_selecting(bool value);
-    std::vector<MyGraphicBezier *> getCurves() const;
+    vector<MyGraphicBezier *> getCurves() const;
 
     QGraphicsScene *getScene() const;
 

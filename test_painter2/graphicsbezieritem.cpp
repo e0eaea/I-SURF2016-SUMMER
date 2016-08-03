@@ -87,18 +87,16 @@ void GraphicsBezierItem::paint(QPainter *painter, const QStyleOptionGraphicsItem
 
 float GraphicsBezierItem::contains_point(QPointF p, float epsilon)
 {
-    float min_distance=MIN_DISTANCE;
+   // float min_distance=MIN_DISTANCE;
 
     for(std::size_t i = 0; i<curve.size(); i++)
     {
         QPointF point = curve[i];
-        QPointF spline_point = QPointF(point.x(), point.y());
-
         float distance = this->distance(p, point);
-        if (distance < min_distance)
-            min_distance = distance;
+        if (distance <= epsilon)
+            return true;
     }
-    return (min_distance <= epsilon);
+    return false;
 
 }
 

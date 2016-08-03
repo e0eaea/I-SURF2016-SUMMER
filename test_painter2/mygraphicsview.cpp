@@ -13,8 +13,7 @@ MyGraphicsView::MyGraphicsView(QWidget *widget):QGraphicsView(widget)
     is_selecting=false;
 
     scene=new QGraphicsScene();
-    scene->setSceneRect(0, 0, 500, 500);
-
+    scene->setSceneRect(0,0,widget->rect().width(),widget->rect().height()-40);
     this->setScene(scene);
     this->setRenderHints(QPainter::Antialiasing);
     this->show();
@@ -168,7 +167,7 @@ void MyGraphicsView::add_curve(QString string)
 {
     add_drawing();
     vector<double> s=split(string,' ');
-    double rad = 5;
+    double rad = 1;
     points_ellipse.clear();
     for(int i=1; i<=4; i++)
     {
@@ -182,6 +181,21 @@ void MyGraphicsView::add_curve(QString string)
     now_point=5;
 
 }
+
+void MyGraphicsView::convert_image_to_point(vector<QPoint*> pixels)
+{
+    double rad = 1;
+
+    for(int i=0; i<pixels.size(); i++)
+     {
+       // qDebug()<<pixels[i]->rx()<<"  "<<pixels[i]->ry();
+        QGraphicsEllipseItem *item= new QGraphicsEllipseItem(QRect(pixels[i]->rx(),pixels[i]->ry(),rad,rad));
+        scene->addItem(item);
+    }
+
+}
+
+
 
 void MyGraphicsView::clear_points_label()
 {
@@ -215,7 +229,7 @@ void MyGraphicsView::drawLines()
     if(now_point>0 && now_point<=4)
     {
         QPointF pt=points[now_point-1];
-        double rad = 5;
+        double rad = 1;
         Mypoint *mp=new Mypoint(now_point,QRect(pt.rx(),pt.ry(), rad, rad));
         scene->addItem(mp);
         scene->addItem(mp->getLabel());

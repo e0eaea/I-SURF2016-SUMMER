@@ -17,7 +17,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -34,7 +33,6 @@ public:
     QAction *actionOpen_file;
     QAction *actionOpen_image;
     QWidget *centralWidget;
-    QStatusBar *statusBar;
     QMenuBar *menuBar;
     QMenu *menuSave;
     QMenu *menuNew;
@@ -47,30 +45,37 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(500, 400);
+        MainWindow->resize(600, 500);
         actionSave_Image = new QAction(MainWindow);
         actionSave_Image->setObjectName(QStringLiteral("actionSave_Image"));
+        QFont font;
+        font.setFamily(QStringLiteral("Helvetica"));
+        font.setPointSize(14);
+        actionSave_Image->setFont(font);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QStringLiteral("actionNew"));
+        actionNew->setFont(font);
         actionAdd_curve = new QAction(MainWindow);
         actionAdd_curve->setObjectName(QStringLiteral("actionAdd_curve"));
+        actionAdd_curve->setFont(font);
         actionModify = new QAction(MainWindow);
         actionModify->setObjectName(QStringLiteral("actionModify"));
+        actionModify->setFont(font);
         actionSave_file = new QAction(MainWindow);
         actionSave_file->setObjectName(QStringLiteral("actionSave_file"));
+        actionSave_file->setFont(font);
         actionOpen_file = new QAction(MainWindow);
         actionOpen_file->setObjectName(QStringLiteral("actionOpen_file"));
+        actionOpen_file->setFont(font);
         actionOpen_image = new QAction(MainWindow);
         actionOpen_image->setObjectName(QStringLiteral("actionOpen_image"));
+        actionOpen_image->setFont(font);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 500, 22));
+        menuBar->setGeometry(QRect(0, 0, 600, 22));
         menuSave = new QMenu(menuBar);
         menuSave->setObjectName(QStringLiteral("menuSave"));
         menuNew = new QMenu(menuBar);

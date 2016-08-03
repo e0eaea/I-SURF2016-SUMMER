@@ -1,3 +1,12 @@
+/************************************************************************
+ * 
+ *    THIS SOURCE is modified from
+ *                            https://github.com/CharlesGaribal/bezier
+ * 
+ * 
+ * 
+ *************************************************************************/
+
 #ifndef GRAPHICSBEZIERITEM_H
 #define GRAPHICSBEZIERITEM_H
 

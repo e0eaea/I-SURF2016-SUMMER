@@ -6,21 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>400</height>
+    <width>600</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
-  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>600</width>
      <height>22</height>
     </rect>
    </property>
@@ -86,35 +85,77 @@
    <property name="text">
     <string>Save Image</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionNew">
    <property name="text">
     <string>new</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>14</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionAdd_curve">
    <property name="text">
     <string>add curve</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionModify">
    <property name="text">
     <string>Select</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>14</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionSave_file">
    <property name="text">
     <string>Save file</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionOpen_file">
    <property name="text">
     <string>open file</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionOpen_image">
    <property name="text">
     <string>open image</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Helvetica</family>
+     <pointsize>14</pointsize>
+    </font>
    </property>
   </action>
  </widget>

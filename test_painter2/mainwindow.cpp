@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->centralWidget->setGeometry(this->rect());
     view=new MyGraphicsView(ui->centralWidget);
     modifying=false;
 
@@ -167,43 +168,45 @@ void MainWindow::on_actionOpen_file_triggered()
 
 void MainWindow::on_actionOpen_image_triggered()
 {
-//    QString fileName = QFileDialog::getOpenFileName(this, tr("Open ImageFile"), QCoreApplication::applicationDirPath(), tr("Image Files (*.png)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open ImageFile"), QCoreApplication::applicationDirPath(), tr("Image Files (*.png)"));
 
-//    if (fileName != "")
-//    {
-//        QFile file(fileName);
+    if (fileName != "")
+    {
 
-//        QPixmap bw = QPixmap(fileName);
-//        QImage image = bw.toImage();
-//        view->getScene()->addPixmap(QPixmap::fromImage(image));
-//        image = image.convertToFormat(QImage::Format_RGB888);
+        QPixmap bw = QPixmap(fileName);
+        QImage image = bw.toImage();
+        //view->getScene()->addPixmap(bw);
 
-//        QVector<bool> bvec;
-//        QByteArray bytes = message.toAscii();
-//        char mask;
-//        QRgb tempPix;
+        qDebug()<<view->height()<<"    @@@"<<view->width();
+        qDebug()<<image.height()<<"    @@@"<<bw.width();
 
-//        for(int i = 0; i < bytes.size(); i++) {
-//            for(int j = 0; j < 8; j++) {
-//                mask = (0x01 << j);
-//                bvec.push_back((bytes[i] & mask) == mask);
-//            }
-//        }
-
-//        if(image.height() < bvec.size()) {
-//            qDebug() << "Not enough space in image";
-//        }
-
-//        for(int j = 0; j < bvec.size(); j++) {
-//            QRgb *pixel = (QRgb *)image.scanLine(j);
-//            tempPix = *pixel;
-//            int blue = qBlue(tempPix);
-
-//            blue &= 0xFE;
-//            blue |= (bvec[j] == 1) ? 0x01 : 0x00;
-//            *pixel = qRgba(qRed(tempPix), qGreen(tempPix), blue, qAlpha(tempPix));
-//        }
+        // QColor white(qRgb(255,255,255));
+        QColor white(Qt::white);
 
 
-//    }
+        image = image.convertToFormat(QImage::Format_RGB888);
+
+        uchar *data = image.bits();
+
+        vector<QPoint*> pixels;
+
+        for (int i = 0; i < (image.width() * image.height() * 3); i+=3 )
+        {
+            QColor c_color((int)data[i],(int)data[i+1],(int)data[i+2]);
+
+            if(c_color!=white){
+                int height=i/(image.width()*3);
+                int width=i%(image.width()*3)/3;
+               // cout<<"["<<height<<","<<width<<"] RGB("<<(int)data[i]<< ", "   <<(int)data[i+1]<<", "<<(int)data[i+2]<< ")."<<endl;
+                QPoint *p=new QPoint(width,height);
+                pixels.push_back(p);
+
+            }
+        }
+
+        view->convert_image_to_point(pixels);
+
+
+
+    }
 }
