@@ -2,9 +2,9 @@
 #define MYGRAPHICSVIEW_H
 
 #include<QtGui>
-
 #include <QGraphicsScene>
 #include "mygraphicbezier.h"
+#include "fitcurve.h"
 
 using namespace std;
 class MyGraphicsView: public QGraphicsView
@@ -14,7 +14,7 @@ public:
     void new_drawing();
     void add_drawing();
     void add_curve(QString string);
-    void convert_image_to_point(vector <QPoint *> pixels);
+    void convert_image_to_point(vector <QPointF *> pixels);
     void clear_points_label();
     void draw_points_label(int num);
     bool getIs_drawing() const;

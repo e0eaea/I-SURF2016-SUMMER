@@ -53,13 +53,15 @@ SOURCES       = ../test_painter2/main.cpp \
 		../test_painter2/mainwindow.cpp \
 		../test_painter2/mygraphicbezier.cpp \
 		../test_painter2/mypoint.cpp \
-		../test_painter2/mygraphicsview.cpp moc_mainwindow.cpp
+		../test_painter2/mygraphicsview.cpp \
+		../test_painter2/fitcurve.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		graphicsbezieritem.o \
 		mainwindow.o \
 		mygraphicbezier.o \
 		mypoint.o \
 		mygraphicsview.o \
+		fitcurve.o \
 		moc_mainwindow.o
 DIST          = ../../../Qt/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt/5.7/clang_64/mkspecs/qdevice.pri \
@@ -224,12 +226,14 @@ DIST          = ../../../Qt/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../test_painter2/mainwindow.h \
 		../test_painter2/mygraphicbezier.h \
 		../test_painter2/mypoint.h \
-		../test_painter2/mygraphicsview.h ../test_painter2/main.cpp \
+		../test_painter2/mygraphicsview.h \
+		../test_painter2/fitcurve.h ../test_painter2/main.cpp \
 		../test_painter2/graphicsbezieritem.cpp \
 		../test_painter2/mainwindow.cpp \
 		../test_painter2/mygraphicbezier.cpp \
 		../test_painter2/mypoint.cpp \
-		../test_painter2/mygraphicsview.cpp
+		../test_painter2/mygraphicsview.cpp \
+		../test_painter2/fitcurve.cpp
 QMAKE_TARGET  = test_painter2
 DESTDIR       = 
 TARGET        = test_painter2.app/Contents/MacOS/test_painter2
@@ -598,8 +602,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../test_painter2/graphicsbezieritem.h ../test_painter2/mainwindow.h ../test_painter2/mygraphicbezier.h ../test_painter2/mypoint.h ../test_painter2/mygraphicsview.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../test_painter2/main.cpp ../test_painter2/graphicsbezieritem.cpp ../test_painter2/mainwindow.cpp ../test_painter2/mygraphicbezier.cpp ../test_painter2/mypoint.cpp ../test_painter2/mygraphicsview.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../test_painter2/graphicsbezieritem.h ../test_painter2/mainwindow.h ../test_painter2/mygraphicbezier.h ../test_painter2/mypoint.h ../test_painter2/mygraphicsview.h ../test_painter2/fitcurve.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../test_painter2/main.cpp ../test_painter2/graphicsbezieritem.cpp ../test_painter2/mainwindow.cpp ../test_painter2/mygraphicbezier.cpp ../test_painter2/mypoint.cpp ../test_painter2/mygraphicsview.cpp ../test_painter2/fitcurve.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../test_painter2/mainwindow.ui $(DISTDIR)/
 
 
@@ -1535,6 +1539,8 @@ mainwindow.o: ../test_painter2/mainwindow.cpp ../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsSceneMouseEvent \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h \
 		ui_mainwindow.h \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QFileDialog \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qfiledialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../test_painter2/mainwindow.cpp
@@ -1896,6 +1902,125 @@ mygraphicsview.o: ../test_painter2/mygraphicsview.cpp ../test_painter2/mygraphic
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mygraphicsview.o ../test_painter2/mygraphicsview.cpp
+
+fitcurve.o: ../test_painter2/fitcurve.cpp ../test_painter2/fitcurve.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QtGui \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qaccessible.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qaccessiblebridge.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qaccessibleobject.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qaccessibleplugin.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qbitmap.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qicon.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qiconengine.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qiconengineplugin.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qimageiohandler.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qimagereader.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qimagewriter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qmovie.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpicture.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpictureformatplugin.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpixmapcache.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qstandarditemmodel.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qclipboard.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qcursor.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qdrag.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qgenericplugin.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qgenericpluginfactory.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qguiapplication.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qinputmethod.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qkeysequence.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qoffscreensurface.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglcontext.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglwindow.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpaintdevicewindow.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpalette.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpixelformat.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qrasterwindow.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qscreen.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qsessionmanager.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qstylehints.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qsurface.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qsurfaceformat.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtouchdevice.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qwindow.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qwindowdefs.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qgenericmatrix.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qmatrix4x4.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qquaternion.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qvector2d.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qvector3d.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qvector4d.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopengl.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglbuffer.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopengldebug.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglextrafunctions.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglframebufferobject.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglfunctions.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglpaintdevice.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglpixeltransferoptions.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglshaderprogram.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopengltexture.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopengltimerquery.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglversionfunctions.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qopenglvertexarrayobject.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qbackingstore.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qbrush.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qmatrix.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpagedpaintdevice.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpagelayout.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpagesize.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpaintdevice.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpaintengine.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpainterpath.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpdfwriter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpen.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qpolygon.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qregion.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qrgb.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qrgba64.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtransform.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qabstracttextdocumentlayout.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qfontdatabase.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qfontinfo.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qfontmetrics.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qglyphrun.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qrawfont.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qstatictext.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qsyntaxhighlighter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextcursor.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextdocument.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextdocumentfragment.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextdocumentwriter.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextformat.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextlayout.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextlist.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextobject.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtextoption.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtexttable.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qdesktopservices.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qvalidator.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/qtguiversion.h \
+		../test_painter2/mygraphicbezier.h \
+		../test_painter2/graphicsbezieritem.h \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QPainterPath \
+		../../../Qt/5.7/clang_64/lib/QtGui.framework/Headers/QPen \
+		../test_painter2/mypoint.h \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsRectItem \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsView \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicsview.h \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QApplication \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qapplication.h \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsSceneMouseEvent \
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fitcurve.o ../test_painter2/fitcurve.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

@@ -1,4 +1,3 @@
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "mygraphicbezier.h"
@@ -188,7 +187,7 @@ void MainWindow::on_actionOpen_image_triggered()
 
         uchar *data = image.bits();
 
-        vector<QPoint*> pixels;
+        vector<QPointF*> pixels;
 
         for (int i = 0; i < (image.width() * image.height() * 3); i+=3 )
         {
@@ -198,15 +197,13 @@ void MainWindow::on_actionOpen_image_triggered()
                 int height=i/(image.width()*3);
                 int width=i%(image.width()*3)/3;
                // cout<<"["<<height<<","<<width<<"] RGB("<<(int)data[i]<< ", "   <<(int)data[i+1]<<", "<<(int)data[i+2]<< ")."<<endl;
-                QPoint *p=new QPoint(width,height);
+                QPointF *p=new QPointF(width,height);
                 pixels.push_back(p);
 
             }
         }
 
         view->convert_image_to_point(pixels);
-
-
 
     }
 }

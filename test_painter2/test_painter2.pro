@@ -17,13 +17,15 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     mygraphicbezier.cpp \
     mypoint.cpp \
-    mygraphicsview.cpp
+    mygraphicsview.cpp \
+    fitcurve.cpp
 
 HEADERS  += \
     graphicsbezieritem.h \
     mainwindow.h \
     mygraphicbezier.h \
     mypoint.h \
-    mygraphicsview.h
+    mygraphicsview.h \
+    fitcurve.h
 
 FORMS    += mainwindow.ui

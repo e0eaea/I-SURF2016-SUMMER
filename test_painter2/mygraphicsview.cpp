@@ -182,15 +182,25 @@ void MyGraphicsView::add_curve(QString string)
 
 }
 
-void MyGraphicsView::convert_image_to_point(vector<QPoint*> pixels)
+void MyGraphicsView::convert_image_to_point(vector<QPointF *> pixels)
 {
     double rad = 1;
 
-    for(int i=0; i<pixels.size(); i++)
+    for(int i=0; i<(int)pixels.size(); i++)
      {
        // qDebug()<<pixels[i]->rx()<<"  "<<pixels[i]->ry();
         QGraphicsEllipseItem *item= new QGraphicsEllipseItem(QRect(pixels[i]->rx(),pixels[i]->ry(),rad,rad));
         scene->addItem(item);
+    }
+
+    FitCurve fitcurve(pixels,4.0);
+    fitcurve.start_fit_curve();
+    vector<MyGraphicBezier*> tmp_curves=fitcurve.getCurves();
+    for(int i=0; i<tmp_curves.size(); i++)
+     {
+        curves.push_back(tmp_curves[i]);
+        tmp_curves[i]->setCurve_number(this->curves.size());
+        scene->addItem(tmp_curves[i]->getBezier_curve());
     }
 
 }
