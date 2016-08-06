@@ -167,7 +167,7 @@ void MyGraphicsView::add_curve(QString string)
 {
     add_drawing();
     vector<double> s=split(string,' ');
-    double rad = 1;
+    double rad = 5;
     points_ellipse.clear();
     for(int i=1; i<=4; i++)
     {
@@ -187,21 +187,14 @@ void MyGraphicsView::convert_image_to_point(vector<QPointF *> pixels)
     double rad = 1;
 
     for(int i=0; i<(int)pixels.size(); i++)
-     {
-       // qDebug()<<pixels[i]->rx()<<"  "<<pixels[i]->ry();
+    {
+        // qDebug()<<pixels[i]->rx()<<"  "<<pixels[i]->ry();
         QGraphicsEllipseItem *item= new QGraphicsEllipseItem(QRect(pixels[i]->rx(),pixels[i]->ry(),rad,rad));
         scene->addItem(item);
     }
+    // for(int i=1; i<(int)pixels.size(); i++)
 
-    FitCurve fitcurve(pixels,4.0);
-    fitcurve.start_fit_curve();
-    vector<MyGraphicBezier*> tmp_curves=fitcurve.getCurves();
-    for(int i=0; i<tmp_curves.size(); i++)
-     {
-        curves.push_back(tmp_curves[i]);
-        tmp_curves[i]->setCurve_number(this->curves.size());
-        scene->addItem(tmp_curves[i]->getBezier_curve());
-    }
+    relocation_pixel(pixels);
 
 }
 
@@ -239,7 +232,7 @@ void MyGraphicsView::drawLines()
     if(now_point>0 && now_point<=4)
     {
         QPointF pt=points[now_point-1];
-        double rad = 1;
+        double rad = 5;
         Mypoint *mp=new Mypoint(now_point,QRect(pt.rx(),pt.ry(), rad, rad));
         scene->addItem(mp);
         scene->addItem(mp->getLabel());
@@ -297,6 +290,96 @@ void MyGraphicsView::add_curve_bezier(float precision)
     qDebug()<<gbi->getBezier_curve()->getControls();
     gbi->setCurve_number(this->curves.size());
     scene->addItem(gbi->getBezier_curve());
+}
+
+void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
+{
+    vector <QPointF *>start_group;
+    group_pixels.push_back(start_group);
+
+    start_group.push_back(pixels[0]);
+    start_group.push_back(pixels[1]);
+
+    for(int i=2; i<(int)pixels.size(); i++)
+    {
+        vector<QPointF*>::iterator it_start=start_group.begin();
+        vector<QPointF*>::iterator it_end=start_group.end();
+
+        QPointF *p=pixels[i];
+        double f_d=distance(p,start_group[0]); // distance between first and this pixel
+        double e_d=distance(p,*(it_end-1)); // distance between end and this
+
+        if(f_d<e_d)
+        {
+            int fit=where_fit(start_group,p,f_d,true);
+            start_group.insert(it_start+fit,p);
+        }
+
+        else
+        {
+            int fit=where_fit(start_group,p,e_d,false);
+            start_group.insert(it_end+fit,p);
+        }
+    }
+
+    for(int i=0; i<(int)start_group.size(); i++)
+    {
+        qDebug()<<i<<"번째  :  "<<*start_group[i];
+    }
+
+
+    FitCurve fitcurve(start_group,1.0);
+    fitcurve.start_fit_curve();
+
+    vector<MyGraphicBezier*> tmp_curves=fitcurve.getCurves();
+    for(int i=0; i<tmp_curves.size(); i++)
+    {
+        curves.push_back(tmp_curves[i]);
+        tmp_curves[i]->setCurve_number(this->curves.size());
+        scene->addItem(tmp_curves[i]->getBezier_curve());
+    }
+
+
+
+}
+
+double MyGraphicsView::distance(QPointF *a, QPointF *b)
+{
+    double x=a->rx()-b->rx();
+    double y=b->ry()-b->ry();
+
+    return x*x+y*y;
+
+}
+
+int MyGraphicsView::where_fit(vector<QPointF *> group,QPointF *p ,double d, bool first_end)
+{
+    int num=0;
+
+    if(first_end)
+    {
+        for(int i=1; i<group.size(); i++)
+        {
+            if(d>distance(group[i],p))
+            { d=distance(group[i],p); num++;}
+            else
+                break;
+        }
+    }
+    else
+    {
+        for(int i=group.size()-1; i<group.size(); i--)
+        {
+            if(d>distance(group[i],p))
+            { d=distance(group[i],p); num--;}
+            else
+                break;
+        }
+
+    }
+
+    return num;
+
 }
 
 vector<double> MyGraphicsView::split(QString str, char delimiter)

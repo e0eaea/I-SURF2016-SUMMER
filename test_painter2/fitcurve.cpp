@@ -35,7 +35,7 @@ void FitCurve::FitCubic(int first, int last, QPointF tHat1, QPointF tHat2, doubl
     int		splitPoint;	/*  Point to split point set at	 */
     int		nPts;		/*  Number of points in subset  */
     double	iterationError; /*Error below which you try iterating  */
-    int		maxIterations = 4; /*  Max times to try iterating  */
+    int		maxIterations = 1000; /*  Max times to try iterating  */
     QPointF	tHatCenter;   	/* Unit tangent vector at splitPoint */
     int		i;
     double rad = DEFAULT_RADIUS;

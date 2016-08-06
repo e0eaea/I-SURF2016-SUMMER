@@ -920,6 +920,7 @@ moc_mainwindow.cpp: ../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QMa
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qapplication.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsSceneMouseEvent \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h \
+		../test_painter2/fitcurve.h \
 		../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/bin/moc
 	/Users/KMK/Qt/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/KMK/Qt/5.7/clang_64/mkspecs/macx-clang -I/Users/KMK/Documents/I-SURF2016-SUMMER/test_painter2 -I/Users/KMK/Qt/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/KMK/Qt/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.3.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include -I'/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks (framework directory)' -F/Users/KMK/Qt/5.7/clang_64/lib ../test_painter2/mainwindow.h -o moc_mainwindow.cpp
@@ -1232,7 +1233,8 @@ main.o: ../test_painter2/main.cpp ../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qapplication.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsSceneMouseEvent \
-		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h
+		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h \
+		../test_painter2/fitcurve.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../test_painter2/main.cpp
 
 graphicsbezieritem.o: ../test_painter2/graphicsbezieritem.cpp ../test_painter2/graphicsbezieritem.h \
@@ -1538,6 +1540,7 @@ mainwindow.o: ../test_painter2/mainwindow.cpp ../test_painter2/mainwindow.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qapplication.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsSceneMouseEvent \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h \
+		../test_painter2/fitcurve.h \
 		ui_mainwindow.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
@@ -1899,6 +1902,7 @@ mygraphicsview.o: ../test_painter2/mygraphicsview.cpp ../test_painter2/mygraphic
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qapplication.h \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsSceneMouseEvent \
 		../../../Qt/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicssceneevent.h \
+		../test_painter2/fitcurve.h \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mygraphicsview.o ../test_painter2/mygraphicsview.cpp

@@ -34,6 +34,7 @@ private:
     std::vector<Mypoint *> points_ellipse;
     QPointF points[4];
     int now_point;
+    vector < vector<QPointF*> > group_pixels;
 
     bool is_drawing;
     bool is_selecting;
@@ -43,6 +44,9 @@ private:
     void unselect_items();
     vector<double>split(QString str, char delimiter);
     void add_curve_bezier(float precision);
+    void relocation_pixel(vector <QPointF *> pixels);
+    double distance(QPointF *a,QPointF *b);
+    int where_fit(vector <QPointF *> group, QPointF *p, double d, bool first_end);
 
 };
 
