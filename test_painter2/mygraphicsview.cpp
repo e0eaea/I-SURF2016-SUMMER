@@ -152,7 +152,6 @@ void MyGraphicsView::new_drawing()
     now_point=0; scene->clear();
     curves.clear();
     points_ellipse.clear();
-    is_drawing=true;
 }
 
 void MyGraphicsView::add_drawing()
@@ -231,6 +230,7 @@ void MyGraphicsView::drawLines()
 
     if(now_point>0 && now_point<=4)
     {
+        is_drawing=true;
         QPointF pt=points[now_point-1];
         double rad = 5;
         Mypoint *mp=new Mypoint(now_point,QRect(pt.rx(),pt.ry(), rad, rad));
@@ -306,7 +306,7 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
         vector<QPointF*>::iterator it_end=start_group.end();
 
         QPointF *p=pixels[i];
-        double f_d=distance(p,start_group[0]); // distance between first and this pixel
+        double f_d=distance(p,*it_start); // distance between first and this pixel
         double e_d=distance(p,*(it_end-1)); // distance between end and this
 
         if(f_d<e_d)
@@ -318,15 +318,24 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
         else
         {
             int fit=where_fit(start_group,p,e_d,false);
-            start_group.insert(it_end+fit,p);
+
+            if(fit==0)
+                start_group.push_back(p);
+            else
+                start_group.insert(it_start+fit,p);
         }
     }
 
+/*
     for(int i=0; i<(int)start_group.size(); i++)
     {
         qDebug()<<i<<"번째  :  "<<*start_group[i];
+         Mypoint *mp1=new Mypoint(i,QRect(start_group[i]->rx(),start_group[i]->ry(), 3, 3));
+         scene->addItem(mp1);
+         scene->addItem(mp1->getLabel());
     }
 
+*/
 
     FitCurve fitcurve(start_group,1.0);
     fitcurve.start_fit_curve();
@@ -341,12 +350,13 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
 
 
 
+
 }
 
 double MyGraphicsView::distance(QPointF *a, QPointF *b)
 {
-    double x=a->rx()-b->rx();
-    double y=b->ry()-b->ry();
+    double x=a->rx()- b->rx();
+    double y=a->ry()- b->ry();
 
     return x*x+y*y;
 
@@ -361,9 +371,8 @@ int MyGraphicsView::where_fit(vector<QPointF *> group,QPointF *p ,double d, bool
         for(int i=1; i<group.size(); i++)
         {
             if(d>distance(group[i],p))
-            { d=distance(group[i],p); num++;}
-            else
-                break;
+            { d=distance(group[i],p); num=i;}
+
         }
     }
     else
@@ -371,10 +380,10 @@ int MyGraphicsView::where_fit(vector<QPointF *> group,QPointF *p ,double d, bool
         for(int i=group.size()-1; i<group.size(); i--)
         {
             if(d>distance(group[i],p))
-            { d=distance(group[i],p); num--;}
-            else
-                break;
+            { d=distance(group[i],p); num=i;}
+
         }
+
 
     }
 

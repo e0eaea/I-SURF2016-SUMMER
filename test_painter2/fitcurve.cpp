@@ -403,9 +403,6 @@ QPointF* FitCurve::V2Add(QPointF *a,QPointF *b,QPointF *c)
 {
     c->setX(a->rx()+b->rx());
     c->setY(a->ry()+b->ry());
-    qDebug()<<"a는 "<<*a;
-    qDebug()<<"b는 "<<*b;
-    qDebug()<<"c는 "<<*c;
     return(c);
 }
 QPointF	FitCurve::V2AddII(QPointF a,QPointF b){
