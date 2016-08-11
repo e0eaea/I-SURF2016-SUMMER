@@ -206,4 +206,10 @@ void MainWindow::on_actionOpen_image_triggered()
         view->convert_image_to_point(pixels);
 
     }
+
+    ui->control_widget->show();
+     ui->control_widget->activateWindow();
+     ui->control_widget->raise();
+
+
 }

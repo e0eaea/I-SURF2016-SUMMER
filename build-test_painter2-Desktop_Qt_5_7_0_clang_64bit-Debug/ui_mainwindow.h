@@ -14,9 +14,12 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -33,6 +36,10 @@ public:
     QAction *actionOpen_file;
     QAction *actionOpen_image;
     QWidget *centralWidget;
+    QWidget *control_widget;
+    QLabel *label;
+    QPushButton *pushButton;
+    QSpinBox *spinBox;
     QMenuBar *menuBar;
     QMenu *menuSave;
     QMenu *menuNew;
@@ -72,6 +79,18 @@ public:
         actionOpen_image->setFont(font);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        control_widget = new QWidget(centralWidget);
+        control_widget->setObjectName(QStringLiteral("control_widget"));
+        control_widget->setGeometry(QRect(470, 20, 120, 80));
+        label = new QLabel(control_widget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(10, 10, 41, 21));
+        pushButton = new QPushButton(control_widget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(0, 40, 113, 32));
+        spinBox = new QSpinBox(control_widget);
+        spinBox->setObjectName(QStringLiteral("spinBox"));
+        spinBox->setGeometry(QRect(70, 10, 48, 24));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -128,6 +147,8 @@ public:
         actionSave_file->setText(QApplication::translate("MainWindow", "Save file", 0));
         actionOpen_file->setText(QApplication::translate("MainWindow", "open file", 0));
         actionOpen_image->setText(QApplication::translate("MainWindow", "open image", 0));
+        label->setText(QApplication::translate("MainWindow", "Error", 0));
+        pushButton->setText(QApplication::translate("MainWindow", "Edit Curve", 0));
         menuSave->setTitle(QApplication::translate("MainWindow", "Save", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuAdd->setTitle(QApplication::translate("MainWindow", "Add", 0));

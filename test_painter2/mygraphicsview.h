@@ -34,7 +34,7 @@ private:
     std::vector<Mypoint *> points_ellipse;
     QPointF points[4];
     int now_point;
-    vector<QPointF*> group_pixels;
+    vector < vector <QPointF *> *> group_pixels;
 
     bool is_drawing;
     bool is_selecting;
