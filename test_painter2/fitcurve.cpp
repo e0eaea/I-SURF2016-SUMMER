@@ -4,10 +4,11 @@
 #define DEFAULT_PRECISION 0.01
 #define MAXPOINTS	1000
 
-FitCurve::FitCurve(vector<QPointF *> pixels, double error)
+FitCurve::FitCurve(vector<QPointF *> pixels, double error,int iteration)
 {
     this->pixels=pixels;
-    this->error=error;
+    this->s_error=error;
+    this->max_iter=iteration;
 }
 
 void FitCurve::start_fit_curve()
@@ -18,7 +19,7 @@ void FitCurve::start_fit_curve()
     tHat2 = ComputeRightTangent(pixels.size()- 1);
     qDebug()<<"여기는";
 
-    FitCubic(0, pixels.size()- 1, tHat1, tHat2,this->error);
+    FitCubic(0, pixels.size()- 1, tHat1, tHat2,this->s_error);
     qDebug()<<"여기는2";
 
 }
@@ -38,7 +39,7 @@ void FitCurve::FitCubic(int first, int last, QPointF tHat1, QPointF tHat2, doubl
     int		splitPoint;	/*  Point to split point set at	 */
     int		nPts;		/*  Number of points in subset  */
     double	iterationError; /*Error below which you try iterating  */
-    int		maxIterations = 100; /*  Max times to try iterating  */
+    int		maxIterations = max_iter; /*  Max times to try iterating  */
     QPointF	tHatCenter;   	/* Unit tangent vector at splitPoint */
     int		i;
     double rad = DEFAULT_RADIUS;

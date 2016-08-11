@@ -187,7 +187,6 @@ void MainWindow::on_actionOpen_image_triggered()
 
         uchar *data = image.bits();
 
-        vector<QPointF*> pixels;
 
         for (int i = 0; i < (image.width() * image.height() * 3); i+=3 )
         {
@@ -203,7 +202,7 @@ void MainWindow::on_actionOpen_image_triggered()
             }
         }
 
-        view->convert_image_to_point(pixels);
+     view->convert_image_to_point(pixels);
 
     }
 
@@ -212,4 +211,9 @@ void MainWindow::on_actionOpen_image_triggered()
      ui->control_widget->raise();
 
 
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    view->convert_image_to_point(pixels,ui->spinBox->value(),(double)ui->spinBox_2->value(),ui->spinBox_3->value());
 }

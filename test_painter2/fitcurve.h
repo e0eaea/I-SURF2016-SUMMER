@@ -10,14 +10,15 @@ using namespace std;
 class FitCurve
 {
 public:
-    FitCurve(vector <QPointF *>  ㅇㅇㅇpixels,double error);
+    FitCurve(vector<QPointF *> pixels, double error,int iteration);
     void start_fit_curve();
     vector<MyGraphicBezier *> getCurves() const;
 
 private:
     vector<MyGraphicBezier*> curves;
     vector <QPointF *> pixels;
-    double	error;
+    double	s_error;
+    int max_iter;
     void FitCubic(int first,int last,QPointF tHat1,QPointF tHat2,double error);
     double *Reparameterize(int first,int last,double* u,QPointF* bezCurve);
     double NewtonRaphsonRootFind(QPointF *Q, QPointF P, double u);

@@ -184,8 +184,10 @@ void MyGraphicsView::add_curve(QString string)
 
 }
 
-void MyGraphicsView::convert_image_to_point(vector<QPointF *> pixels)
+void MyGraphicsView::convert_image_to_point(vector<QPointF *> pixels, int min_d, double fit_error, int iteration)
 {
+    new_drawing();
+
     double rad = 1;
 
     for(int i=0; i<(int)pixels.size(); i++)
@@ -196,6 +198,9 @@ void MyGraphicsView::convert_image_to_point(vector<QPointF *> pixels)
     }
     // for(int i=1; i<(int)pixels.size(); i++)
 
+    this->min_d=min_d;
+    this->fit_error=fit_error;
+    this->fit_iter=iteration;
     relocation_pixel(pixels);
 
 }
@@ -320,7 +325,7 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
         for(int i=1; i<(int)pixels.size(); i++)
         {
 
-            double min=10000;
+            double min=min_d;
             int last=g->size()-1;
 
             int neighbor=-1;
@@ -386,11 +391,12 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
         vector<QPointF*>::iterator it_s=tmp_g.begin();
         vector<QPointF*>::iterator it_e=tmp_g.end()-1;
 
-        if(distance(*it_s,*it_e)<10000)
+        if(distance(*it_s,*it_e)<min_d)
             tmp_g.push_back(tmp_g[0]);
 
         if(tmp_g.size()>=2)
         {
+            /*
             for(int j=0; j<(int)tmp_g.size(); j++)
             {
                 qDebug()<<j<<"번째  :  "<<*tmp_g[j];
@@ -398,8 +404,9 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
                 scene->addItem(mp1);
                 scene->addItem(mp1->getLabel());
             }
+            */
 
-            FitCurve fitcurve(tmp_g,100.0);
+            FitCurve fitcurve(tmp_g,fit_error,fit_iter);
             fitcurve.start_fit_curve();
 
             vector<MyGraphicBezier*> tmp_curves=fitcurve.getCurves();
@@ -425,7 +432,7 @@ double MyGraphicsView::distance(QPointF *a, QPointF *b)
     double x=a->rx()- b->rx();
     double y=a->ry()- b->ry();
 
-    return x*x+y*y;
+    return sqrt(x*x+y*y);
 
 }
 
