@@ -17,10 +17,10 @@
    <widget class="QWidget" name="control_widget" native="true">
     <property name="geometry">
      <rect>
-      <x>449</x>
+      <x>450</x>
       <y>10</y>
       <width>141</width>
-      <height>131</height>
+      <height>121</height>
      </rect>
     </property>
     <widget class="QLabel" name="label">
@@ -133,6 +133,68 @@
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="result_widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>459</x>
+      <y>370</y>
+      <width>141</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <widget class="QLabel" name="curves">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>59</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Curves :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="avg_d">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Avg_D  :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="curves_val">
+     <property name="geometry">
+      <rect>
+       <x>78</x>
+       <y>10</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="avg_d_val">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>30</y>
+       <width>59</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -177,11 +239,19 @@
     <addaction name="separator"/>
     <addaction name="actionOpen_image"/>
    </widget>
+   <widget class="QMenu" name="menuQuality">
+    <property name="title">
+     <string>Quality</string>
+    </property>
+    <addaction name="actionImport_Original_Image"/>
+    <addaction name="actionF"/>
+   </widget>
    <addaction name="menuNew"/>
    <addaction name="menuAdd"/>
    <addaction name="menuModify"/>
    <addaction name="menuSave"/>
    <addaction name="menuOpen"/>
+   <addaction name="menuQuality"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -196,7 +266,6 @@
    <addaction name="actionNew"/>
    <addaction name="actionAdd_curve"/>
    <addaction name="actionModify"/>
-   <addaction name="actionSave_Image"/>
    <addaction name="actionSave_file"/>
    <addaction name="actionOpen_file"/>
    <addaction name="actionOpen_image"/>
@@ -276,6 +345,16 @@
      <family>Helvetica</family>
      <pointsize>14</pointsize>
     </font>
+   </property>
+  </action>
+  <action name="actionImport_Original_Image">
+   <property name="text">
+    <string>Import Original Image</string>
+   </property>
+  </action>
+  <action name="actionF">
+   <property name="text">
+    <string>Measure</string>
    </property>
   </action>
  </widget>

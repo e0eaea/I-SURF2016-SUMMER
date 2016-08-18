@@ -1,6 +1,6 @@
 #include "fitcurve.h"
 
-#define DEFAULT_RADIUS 1
+#define DEFAULT_RADIUS 5
 #define DEFAULT_PRECISION 0.01
 #define MAXPOINTS	1000
 
@@ -15,12 +15,9 @@ void FitCurve::start_fit_curve()
 {
     QPointF tHat1,tHat2;
     tHat1 = ComputeLeftTangent(0);
-    qDebug()<<"픽셀사이즈는"<<pixels.size();
     tHat2 = ComputeRightTangent(pixels.size()- 1);
-    qDebug()<<"여기는";
 
     FitCubic(0, pixels.size()- 1, tHat1, tHat2,this->s_error);
-    qDebug()<<"여기는2";
 
 }
 
@@ -31,6 +28,7 @@ vector<MyGraphicBezier *> FitCurve::getCurves() const
 
 void FitCurve::FitCubic(int first, int last, QPointF tHat1, QPointF tHat2, double error)
 {
+
     QPointF* bezCurve; /*Control points of fitted Bezier curve*/
     std::vector<Mypoint *> bezCurve_points;
     double	*u;		/*  Parameter values for point  */
@@ -50,7 +48,6 @@ void FitCurve::FitCubic(int first, int last, QPointF tHat1, QPointF tHat2, doubl
 
     /*  Use heuristic if region only has two points in it */
     if (nPts == 2) {
-        qDebug()<<"1231";
 
         double dist = V2DistanceBetween2Points(pixels[last], pixels[first]) / 3.0;
         bezCurve=new QPointF[4];
@@ -59,9 +56,6 @@ void FitCurve::FitCubic(int first, int last, QPointF tHat1, QPointF tHat2, doubl
 
         V2Add(&bezCurve[0], V2Scale(&tHat1, dist),&bezCurve[1]);
         V2Add(&bezCurve[3], V2Scale(&tHat2, dist),&bezCurve[2]);
-
-        qDebug()<<"C1 "<<bezCurve[1];
-        qDebug()<<"C2 "<<bezCurve[2];
 
         for(i=0; i<4; i++)
         {
@@ -108,7 +102,7 @@ void FitCurve::FitCubic(int first, int last, QPointF tHat1, QPointF tHat2, doubl
             if (maxError < error) {
                 for(int j=0; j<4; j++)
                 {
-                    Mypoint *mp=new Mypoint(i+1,QRect(bezCurve[j].rx(),bezCurve[j].ry(), rad, rad));
+                    Mypoint *mp=new Mypoint(j+1,QRect(bezCurve[j].rx(),bezCurve[j].ry(), rad, rad));
                     bezCurve_points.push_back(mp);
                 }
 
@@ -403,44 +397,5 @@ QPointF* FitCurve::GenerateBezier(int first, int last, double* uPrime, QPointF t
     return (bezCurve);
 }
 
-QPointF* FitCurve::V2Add(QPointF *a,QPointF *b,QPointF *c)
-{
-    c->setX(a->rx()+b->rx());
-    c->setY(a->ry()+b->ry());
-    return(c);
-}
-QPointF	FitCurve::V2AddII(QPointF a,QPointF b){
-
-    QPointF c;
-    c.setX(a.rx() + b.rx()); c.setY(a.ry() + b.ry());
-    return (c);
-
-}
-
-QPointF* FitCurve::V2Scale(QPointF *v, double newlen)
-{
-    double len = V2Length(v);
-    if (len != 0.0) { v->setX( v->rx()* newlen/len );  v->setY( v->ry()* newlen/len ); }
-    return(v);
-}
-QPointF	FitCurve::V2ScaleIII(QPointF v,double s)
-{
-    QPointF result;
-    result.setX(v.rx() * s); result.setY(v.ry() * s);
-    return (result);
-}
-QPointF	FitCurve::V2SubII(QPointF a,QPointF b)
-{
-    QPointF c;
-    c.setX(a.rx() - b.rx()); c.setY(a.ry() - b.ry());
-    return (c);
-}
-
-QPointF *FitCurve::V2Normalize(QPointF *v)
-{
-    double len = V2Length(v);
-    if (len != 0.0) { v->setX(v->rx()/= len);   v->setY(v->ry() /= len); }
-    return(v);
-}
 
 

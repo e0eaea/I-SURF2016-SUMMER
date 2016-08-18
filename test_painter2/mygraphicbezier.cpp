@@ -14,7 +14,7 @@ void MyGraphicBezier::update()
     bezier_curve->setControl(2,points_ellipse.at(2)->rect().center());
     bezier_curve->update();
 
-    qDebug()<<"finish update";
+    //qDebug()<<"finish update";
 
 }
 
@@ -55,6 +55,7 @@ MyGraphicBezier::MyGraphicBezier(const std::vector<Mypoint *>& points,float prec
 
     //bezier_curve->setFlag(QGraphicsItem::ItemIsFocusable);
 
-    qDebug()<<"finish";
+//    qDebug()<<"finish";
 
 }
+

@@ -3,45 +3,48 @@
 #include "QThread"
 #include <iostream>
 #include <sstream>
-#include <string>
+#include <QLabel>
 
 
-MyGraphicsView::MyGraphicsView(QWidget *widget):QGraphicsView(widget)
+MyGraphicsView::MyGraphicsView(QMainWindow *mv,QWidget *widget):QGraphicsView(widget)
 {
-    qDebug()<<"this";
+    this->mv=mv;
     now_point=0;
     epsilon = 11.0;
-    is_drawing=true;
+    is_drawing=false;
     is_selecting=false;
+    gbi=NULL;
 
     scene=new QGraphicsScene();
     scene->setSceneRect(0,0,widget->rect().width(),widget->rect().height()-40);
     this->setScene(scene);
     this->setRenderHints(QPainter::Antialiasing);
     this->show();
+
 }
 
 void MyGraphicsView::mousePressEvent(QMouseEvent *event)
 {
-
-    if (event->buttons() & Qt::LeftButton & (now_point<4))
+    if(is_selecting)
     {
-        QPointF point=QPointF(event->pos().x(),event->pos().y());
-
-        points[now_point++]=point;
+        unselect_items();
+        this->select_item_at(event->pos());
     }
-    else if(now_point>4)
+
+    else
     {
 
-        QGraphicsView::mousePressEvent(event); // for moving point!(it's available to point 2,3)
-
-        if(is_selecting)  // selecting curve for modifying!
+        if (event->buttons() & Qt::LeftButton & (now_point<4))
         {
-            unselect_items();
-            this->select_item_at(event->pos());
-        }
-    }
+            QPointF point=QPointF(event->pos().x(),event->pos().y());
 
+            points[now_point++]=point;
+        }
+
+        else if(now_point>4)
+            QGraphicsView::mousePressEvent(event); // for moving point!(it's available to point 2,3)
+
+    }
 
 }
 
@@ -51,14 +54,20 @@ void MyGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 
     QGraphicsView::mouseReleaseEvent(event);
 
-    if(gbi != NULL)
-    {
-        drawLines();
-        update();
-
-    }
+    drawLines();
+    update();
 
 
+}
+
+int MyGraphicsView::getNow_point() const
+{
+    return now_point;
+}
+
+void MyGraphicsView::setNow_point(int value)
+{
+    now_point = value;
 }
 
 QGraphicsScene *MyGraphicsView::getScene() const
@@ -81,6 +90,44 @@ void MyGraphicsView::setIs_selecting(bool value)
     is_selecting = value;
 }
 
+void MyGraphicsView::set_original_pixels(vector<QPointF *> *pixels)
+{
+    this->original_pixels= *pixels;
+    draw_original_image();
+}
+
+void MyGraphicsView::check_measurement()
+{
+    Measurement m;
+
+    double total=0;
+
+    for(int i=0; i<(int)original_pixels.size(); i++)
+    {
+        double min=0;
+        for(int j=0; j<(int)curves.size(); j++)
+        {
+            MyGraphicBezier *bgi=curves[j];
+
+            double d=m.NearestPointOnCurve(*original_pixels[i],bgi->getBezier_curve()->getControls());
+
+            if(min==0 | d<min)
+                min=d;
+        }
+
+        total+=min;
+    }
+
+    double avg=total/original_pixels.size();
+
+    QString avg_num;
+    avg_num.sprintf("%.2f",avg);
+    QLabel *label = mv->findChild<QLabel *>("avg_d_val");
+
+    label->setText(avg_num);
+
+}
+
 bool MyGraphicsView::getIs_drawing() const
 {
     return is_drawing;
@@ -97,9 +144,9 @@ void MyGraphicsView::select_item_at(QPoint p)
         GraphicsBezierItem*curve= item->getBezier_curve();
         if(curve->contains_point(point, this->epsilon))
         {
-            qDebug()<<item->getCurve_number()<<"여기 확인";
 
             gbi=item;
+            points_ellipse.clear();
             points_ellipse= item->getPoints_ellipse();
             curve->set_selected(true);
 
@@ -115,9 +162,9 @@ void MyGraphicsView::select_item_at(QPoint p)
 
         else
         {
-            qDebug()<<item->getCurve_number()<<"빈곳클릭";
+            qDebug()<<"ㅂㄱ";
             gbi=NULL;
-            points_ellipse.clear();
+            //points_ellipse.clear();
         }
 
     }
@@ -139,7 +186,6 @@ void MyGraphicsView::unselect_items()
 
         }
 
-        qDebug()<<"unselect"<<gbi->getCurve_number();
         curve->update();
         gbi=NULL;
         points_ellipse.clear();
@@ -150,16 +196,20 @@ void MyGraphicsView::unselect_items()
 
 void MyGraphicsView::new_drawing()
 {
-    now_point=0; scene->clear();
+    now_point=0;
+    scene->clear();
     curves.clear();
     points_ellipse.clear();
     group_pixels.clear();
+
+    if((int)original_pixels.size()!=0)
+        draw_original_image();
 
 }
 
 void MyGraphicsView::add_drawing()
 {
-    qDebug()<<points_ellipse<<"  "<<now_point;
+    //qDebug()<<points_ellipse<<"  "<<now_point;
     clear_points_label();
     now_point=0;
     points_ellipse.clear();
@@ -188,14 +238,14 @@ void MyGraphicsView::convert_image_to_point(vector<QPointF *> pixels, int min_d,
 {
     new_drawing();
 
-    double rad = 1;
+    //    double rad = 1;
 
-    for(int i=0; i<(int)pixels.size(); i++)
-    {
-        // qDebug()<<pixels[i]->rx()<<"  "<<pixels[i]->ry();
-        QGraphicsEllipseItem *item= new QGraphicsEllipseItem(QRect(pixels[i]->rx(),pixels[i]->ry(),rad,rad));
-        scene->addItem(item);
-    }
+    //    for(int i=0; i<(int)pixels.size(); i++)
+    //    {
+    //        // qDebug()<<pixels[i]->rx()<<"  "<<pixels[i]->ry();
+    //        QGraphicsEllipseItem *item= new QGraphicsEllipseItem(QRect(pixels[i]->rx(),pixels[i]->ry(),rad,rad));
+    //        scene->addItem(item);
+    //    }
     // for(int i=1; i<(int)pixels.size(); i++)
 
     this->min_d=min_d;
@@ -232,7 +282,6 @@ void MyGraphicsView::draw_points_label(int num)
 }
 
 
-
 void MyGraphicsView::drawLines()
 {
 
@@ -250,40 +299,33 @@ void MyGraphicsView::drawLines()
         //qDebug()<<pt;
     }
 
-    if(now_point==5)
+    if(now_point==5)  //transform
     {
+        if(gbi!=NULL)
+        {
+            int num=gbi->getCurve_number()-1;
+            float precision=gbi->getBezier_curve()->getPrecision();
 
-        int num=gbi->getCurve_number()-1;
-        float precision=gbi->getBezier_curve()->getPrecision();
-        qDebug()<<"출력샘플";
+            scene->removeItem(gbi->getBezier_curve());
+            delete gbi;
+            gbi= curves.at(num)=NULL;
+            gbi = new MyGraphicBezier(points_ellipse,precision);
+            gbi->setCurve_number(num+1);
 
 
-        scene->removeItem(gbi->getBezier_curve());
-        delete gbi;
-        qDebug()<<points_ellipse;
-        gbi= curves.at(num)=NULL;
-        gbi = new MyGraphicBezier(points_ellipse,precision);
-        gbi->setCurve_number(num+1);
-        curves.at(num)=gbi;
-        scene->addItem(gbi->getBezier_curve());
+            qDebug()<<"this2";
+            curves.at(num)=gbi;
+            scene->addItem(gbi->getBezier_curve());
 
-        qDebug()<<"this";
-        qDebug()<<curves.size();
+            check_measurement();
+        }
 
-        //여기서 지우고 업데이트
-        //        gbi = new MyGraphicBezier(points_ellipse);
-        //        this->curves.push_back(gbi);
-        //    gbi->setCurve_number(this->curves.size());
-        //
-        // now_point++;
     }
 
 
     if(now_point==4)
     {
-
         add_curve_bezier(0.01f);
-        qDebug() <<"여기"<<curves;
         now_point++;
     }
 
@@ -294,8 +336,8 @@ void MyGraphicsView::add_curve_bezier(float precision)
     is_drawing=false;
     gbi = new MyGraphicBezier(points_ellipse,precision);
     this->curves.push_back(gbi);
-    qDebug() <<curves.size()<<"여기 숫자저장";
-    qDebug()<<gbi->getBezier_curve()->getControls();
+    //    qDebug() <<curves.size()<<"여기 숫자저장";
+    //    qDebug()<<gbi->getBezier_curve()->getControls();
     gbi->setCurve_number(this->curves.size());
     scene->addItem(gbi->getBezier_curve());
 }
@@ -306,7 +348,7 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
     {
         vector <QPointF *> remain_pixels;
         int pixel_size=pixels.size();
-        qDebug()<<"사이즈는: "<<pixel_size;
+        //        qDebug()<<"사이즈는: "<<pixel_size;
 
         if(pixel_size==0)
             break;
@@ -371,20 +413,20 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
 
         //copy remain to original
 
-        for(int i=0; i<pixels.size(); i++)
+        for(int i=0; i<(int)pixels.size(); i++)
             if(pixel_group_usebit[i]==0) remain_pixels.push_back(pixels[i]);
 
-        qDebug()<<"남은거"<<remain_pixels.size();
+        //        qDebug()<<"남은거"<<remain_pixels.size();
 
         pixels.clear();
 
-        for(int i=0; i<remain_pixels.size(); i++)
+        for(int i=0; i<(int)remain_pixels.size(); i++)
             pixels.push_back(remain_pixels[i]);
     }
 
-    for(int i=0; i<group_pixels.size(); i++)
+    for(int i=0; i<(int)group_pixels.size(); i++)
     {
-        qDebug()<<"check ";
+        //        qDebug()<<"check ";
         vector <QPointF *> *gp=group_pixels[i];
         vector <QPointF *> tmp_g=*gp;
 
@@ -399,7 +441,7 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
             /*
             for(int j=0; j<(int)tmp_g.size(); j++)
             {
-                qDebug()<<j<<"번째  :  "<<*tmp_g[j];
+                ->rx()()<<j<<"번째  :  "<<*tmp_g[j];
                 Mypoint *mp1=new Mypoint(j,QRect(tmp_g[j]->rx(),tmp_g[j]->ry(), 3, 3));
                 scene->addItem(mp1);
                 scene->addItem(mp1->getLabel());
@@ -420,12 +462,14 @@ void MyGraphicsView::relocation_pixel(vector<QPointF *> pixels)
         }
     }
 
+    QString cur_num;
+    cur_num.sprintf("%d",(int)curves.size());
+    QLabel *label = mv->findChild<QLabel *>("curves_val");
 
-
-
-
+    label->setText(cur_num);
 
 }
+
 
 double MyGraphicsView::distance(QPointF *a, QPointF *b)
 {
@@ -440,13 +484,13 @@ int MyGraphicsView::where_pixel(vector<QPointF *> *group,QPointF *a)
 {
     int num;
     vector<QPointF *> g=*group;
-    for(int i=0; i<g.size(); i++)
+    for(int i=0; i<(int)g.size(); i++)
     {
         qDebug()<<i<<"번째  "<<g[i];
         if(a==g[i])
         { num=i;  qDebug()<<"same"<<i;
 
-            if(i==g.size()-1)
+            if(i==(int)g.size()-1)
                 num++;
         }
 
@@ -455,6 +499,18 @@ int MyGraphicsView::where_pixel(vector<QPointF *> *group,QPointF *a)
     return num;
 
 }
+
+void MyGraphicsView::draw_original_image()
+{
+
+    double rad = 1;
+    QPen pen;
+    pen.setColor(Qt::lightGray);
+
+    for(int i=0; i<(int)original_pixels.size(); i++)
+        scene->addEllipse(QRect(original_pixels[i]->rx(),original_pixels[i]->ry(),rad,rad),pen,QBrush(Qt::SolidPattern));
+}
+
 
 vector<double> MyGraphicsView::split(QString str, char delimiter)
 {

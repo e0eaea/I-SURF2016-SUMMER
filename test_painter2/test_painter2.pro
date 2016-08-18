@@ -18,7 +18,9 @@ SOURCES += main.cpp\
     mygraphicbezier.cpp \
     mypoint.cpp \
     mygraphicsview.cpp \
-    fitcurve.cpp
+    fitcurve.cpp \
+    measurement.cpp \
+    common_modules.cpp
 
 HEADERS  += \
     graphicsbezieritem.h \
@@ -26,6 +28,8 @@ HEADERS  += \
     mygraphicbezier.h \
     mypoint.h \
     mygraphicsview.h \
-    fitcurve.h
+    fitcurve.h \
+    measurement.h \
+    common_modules.h
 
 FORMS    += mainwindow.ui
