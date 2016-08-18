@@ -35,10 +35,19 @@ private slots:
 
     void on_actionOpen_image_triggered();
 
+    void on_pushButton_clicked();
+
+    void on_actionImport_Original_Image_triggered();
+
+    void on_actionF_triggered();
+
 private:
     bool modifying;
+    bool exist_original;
     Ui::MainWindow *ui;
     MyGraphicsView* view;
+    vector<QPointF*> pixels;
+    vector<QPointF*> original_pixels;
 
 };
 
